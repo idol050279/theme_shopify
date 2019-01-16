@@ -1,0 +1,385 @@
+{{ 'owl.carousel.css' | asset_url | stylesheet_tag }}
+<link href="{{ 'owl.theme.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
+{% paginate collection.products by 300 %}
+
+<div class="section-header section-header--breadcrumb">
+  {% include 'breadcrumb' %}
+</div>
+
+<header class="section-header section-header--large ">
+  <h1 class="section-header__title{% if settings.collections_tags_enable or settings.collections_sort_enable %} section-header__title--left{% endif %}">{{ collection.title }}</h1>
+  {% if settings.collections_tags_enable or settings.collections_sort_enable %}
+  <div class="section-header__link--right">
+    {% if settings.collections_tags_enable %}
+      {% include 'collection-tags' %}
+    {% endif %}
+    {% if settings.collections_sort_enable %}
+      {% include 'collection-sorting' %}
+    {% endif %}
+  </div>
+  {% endif %}
+</header>
+
+{% if collection.description != blank %}
+  <div class="rte rte--header carousel_desc">
+    {{ collection.description }}
+  </div>
+  <hr class="hr--clear hr--small">
+{% endif %}
+
+<div class="grid-uniform grid-link__container carousel_row">
+     
+  {% for product in collection.products%}
+  	{%comment%}
+  	{% include 'product-grid-item' %}
+  	{%endcomment%}
+  
+  {%assign flag = ''%}
+  {%assign flag2 = 'true'%}
+  {%assign ptag_title = '' %}
+  {%assign carousel_title = ''%}
+  
+  	{%for ptag in product.tags%}
+        {%if ptag contains 'carousel_'%}
+        	{%assign flag = 'true'%}
+        	{%assign ptag_title = ptag%}  			
+        {%endif%}
+  		{%if ptag contains 'carouselTitle_'%}
+  			{%assign carousel_title = ptag | split: 'carouselTitle_' | last %}
+  		{%endif%}
+        {%if ptag == 'carousel_remove'%}
+        	{%assign flag2 = 'false'%}
+        {%endif%}
+        
+  	{%endfor%}
+  	{%if flag2 == 'true' and flag == 'true'%}
+  		<h3>{{carousel_title}}</h3>
+  		<div class="owl_carousel{%cycle 1,2,3,4,5%} owl_carousel">  			
+			{% for sp_product in collection.products %}
+          		{%for sp_tag in sp_product.tags%}
+          			{%if ptag_title == sp_tag%}          				
+                          	{% include 'product-grid-item-similar' %}	          				
+          			{%endif%}
+          		{%endfor%}
+          	{%endfor%}
+  		</div>
+  	{%endif%}
+  	
+  {%endfor%}
+
+</div>
+
+{% if paginate.pages > 1 %}
+  <hr class="hr--clear">
+
+  <div class="text-center">
+    {% include 'pagination-custom' %}
+  </div>
+{% endif %}
+
+{% endpaginate %}
+
+<script type="text/javascript">
+$(document).ready(function($) {    
+  
+  $(".owl_carousel1").owlCarousel({
+
+    // Most important owl features
+    items : 5,
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,2],
+    singleItem : false,
+    itemsScaleUp : false,	
+    
+    //Basic Speeds
+    slideSpeed : 200,
+    paginationSpeed : 600,
+    rewindSpeed : 1000,
+
+    //Autoplay
+    autoPlay : true,
+    stopOnHover : false,
+    autoplaySpeed: 500,
+
+    // Navigation
+    navigation : true,
+    navigationText : ["prev","next"],
+    rewindNav : true,
+    scrollPerPage : false,
+	slideBy: 1,
+    
+    //Pagination
+    pagination : false,
+    paginationNumbers: false,
+
+    // Responsive 
+    responsive: true,
+    responsiveRefreshRate : 200,
+    responsiveBaseWidth: window,
+
+    // CSS Styles
+    baseClass : "owl-carousel",
+    theme : "owl-theme",
+
+    //Lazy load
+    lazyLoad : false,
+    lazyFollow : true,
+    lazyEffect : "fade",
+
+    //Auto height
+    autoHeight : false,
+
+/*    //JSON 
+    jsonPath : false, 
+    jsonSuccess : false, */
+
+    //Mouse Events
+    dragBeforeAnimFinish : true,
+    mouseDrag : true,
+    touchDrag : true,
+
+/*    //Transitions
+    transitionStyle : false,
+
+    // Other
+    addClassActive : false,
+
+    //Callbacks
+    beforeUpdate : false,
+    afterUpdate : false,
+    beforeInit: false, 
+    afterInit: false, 
+    beforeMove: false, 
+    afterMove: false,
+    afterAction: false,
+    startDragging : false
+    afterLazyLoad : false */
+});
+  $(".owl_carousel2").owlCarousel({
+
+    // Most important owl features
+    items : 5,
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,2],
+    singleItem : false,
+    itemsScaleUp : false,	
+    
+    //Basic Speeds
+    slideSpeed : 500,
+    paginationSpeed : 800,
+    rewindSpeed : 1500,
+
+    //Autoplay
+    autoPlay : true,
+    stopOnHover : false,
+	autoplaySpeed: 800,
+    
+    // Navigation
+    navigation : true,
+    navigationText : ["prev","next"],
+    rewindNav : true,
+    scrollPerPage : false,
+	slideBy: 2,
+    
+    //Pagination
+    pagination : false,
+    paginationNumbers: false,
+
+    // Responsive 
+    responsive: true,
+    responsiveRefreshRate : 200,
+    responsiveBaseWidth: window,
+
+    // CSS Styles
+    baseClass : "owl-carousel",
+    theme : "owl-theme",
+
+    //Lazy load
+    lazyLoad : false,
+    lazyFollow : true,
+    lazyEffect : "fade",
+
+    //Auto height
+    autoHeight : false,
+
+    //Mouse Events
+    dragBeforeAnimFinish : true,
+    mouseDrag : true,
+    touchDrag : true,
+});
+	$(".owl_carousel3").owlCarousel({
+
+    // Most important owl features
+    items : 5,
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,2],
+    singleItem : false,
+    itemsScaleUp : false,
+
+    //Basic Speeds
+    slideSpeed : 800,
+    paginationSpeed : 1000,
+    rewindSpeed : 1000,
+
+    //Autoplay
+    autoPlay : true,
+    stopOnHover : false,
+
+    // Navigation
+    navigation : true,
+    navigationText : ["prev","next"],
+    rewindNav : true,
+    scrollPerPage : false,
+
+    //Pagination
+    pagination : false,
+    paginationNumbers: false,
+
+    // Responsive 
+    responsive: true,
+    responsiveRefreshRate : 200,
+    responsiveBaseWidth: window,
+
+    // CSS Styles
+    baseClass : "owl-carousel",
+    theme : "owl-theme",
+
+    //Lazy load
+    lazyLoad : false,
+    lazyFollow : true,
+    lazyEffect : "fade",
+
+    //Auto height
+    autoHeight : false,
+
+    //Mouse Events
+    dragBeforeAnimFinish : true,
+    mouseDrag : true,
+    touchDrag : true,
+
+});
+  $(".owl_carousel4").owlCarousel({
+
+    // Most important owl features
+    items : 5,
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,2],
+    singleItem : false,
+    itemsScaleUp : false,
+
+    //Basic Speeds
+    slideSpeed : 1000,
+    paginationSpeed : 1200,
+    rewindSpeed : 1000,
+
+    //Autoplay
+    autoPlay : true,
+    stopOnHover : false,
+
+    // Navigation
+    navigation : true,
+    navigationText : ["prev","next"],
+    rewindNav : true,
+    scrollPerPage : false,
+
+    //Pagination
+    pagination : false,
+    paginationNumbers: false,
+
+    // Responsive 
+    responsive: true,
+    responsiveRefreshRate : 200,
+    responsiveBaseWidth: window,
+
+    // CSS Styles
+    baseClass : "owl-carousel",
+    theme : "owl-theme",
+
+    //Lazy load
+    lazyLoad : false,
+    lazyFollow : true,
+    lazyEffect : "fade",
+
+    //Auto height
+    autoHeight : false,
+
+    //Mouse Events
+    dragBeforeAnimFinish : true,
+    mouseDrag : true,
+    touchDrag : true,
+
+});
+  $(".owl_carousel5").owlCarousel({
+
+    // Most important owl features
+    items : 5,
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,2],
+    singleItem : false,
+    itemsScaleUp : false,
+
+    //Basic Speeds
+    slideSpeed : 300,
+    paginationSpeed : 800,
+    rewindSpeed : 1000,
+
+    //Autoplay
+    autoPlay : true,
+    stopOnHover : false,
+
+    // Navigation
+    navigation : true,
+    navigationText : ["prev","next"],
+    rewindNav : true,
+    scrollPerPage : false,
+
+    //Pagination
+    pagination : false,
+    paginationNumbers: false,
+
+    // Responsive 
+    responsive: true,
+    responsiveRefreshRate : 200,
+    responsiveBaseWidth: window,
+
+    // CSS Styles
+    baseClass : "owl-carousel",
+    theme : "owl-theme",
+
+    //Lazy load
+    lazyLoad : false,
+    lazyFollow : true,
+    lazyEffect : "fade",
+
+    //Auto height
+    autoHeight : false,
+
+    //Mouse Events
+    dragBeforeAnimFinish : true,
+    mouseDrag : true,
+    touchDrag : true,
+
+});
+});
+</script>

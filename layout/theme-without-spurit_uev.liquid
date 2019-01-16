@@ -1,0 +1,577 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+{% include 'easylockdown_head' %}
+<style type="text/css">#easylockdown-password { display: inline-block; width: auto; }</style>
+
+<meta name="google-site-verification" content="1JtA8o5WSPkbrZThuJoak1TVXpk02k-UszzUNeq0ZOk" />
+<meta name="google-site-verification" content="uKkl5OlcHVX30AfYMuKVpnK6qdMZHYlPabKTJ9gPn4I" />
+  <meta name="norton-safeweb-site-verification" content="sjlrvzisxlyg3n-dnfly3oh56-b53nm0k-8fr7r4ss6-8622c6deplu651q80brkr17pnogysbtxhturoa8iqqvtf9qxmafac1y8yaofv5v87u30hvd32rs3pd7lur4u" />
+
+  
+<meta name="p:domain_verify" content="381d86e8fc084b16e7b3292c474050a3"/>  
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  {% if settings.favicon_enable %}
+  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+  {% endif %}
+
+  <!-- Title and description ================================================== -->
+  <title>
+  {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <!-- Social meta ================================================== -->
+  {% include 'social-meta-tags' %}
+
+  <!-- Helpers ================================================== -->
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">  
+  <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+
+  <!-- CSS ================================================== -->
+  {{ 'responsive-tabs.css' | asset_url | stylesheet_tag }}
+  {{ 'style.css' | asset_url | stylesheet_tag }}
+  {{ 'timber.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+
+  {% include 'google-fonts' %}
+
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}
+
+  {% include 'oldIE-js' %}
+
+  {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
+  {{ 'modernizr.min.js' | asset_url | script_tag }}
+
+  {% comment %}
+    If you store has customer accounts disabled, you can remove the following JS file
+  {% endcomment %}
+  {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}   
+  
+  {%if page.handle == 'contact-us' %}
+  <!--<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2omjXW83FmkCUpmReHLWg86uTa7okXwY" type="text/javascript"></script>
+  {%endif%}
+ 
+  
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TSMM3NK');</script>
+<!-- End Google Tag Manager -->
+  
+
+
+
+<!-- GSSTART Slider code start. Do not change -->{% if product.id > 1 %}
+<script>document.write('<script src="' + 'https://gravity-software.com//js/shopify/slider_prod{{ product.id }}.js?v=' + Math.floor(Math.random() * 100) + '"\><\/script>'); </script> <script type="text/javascript" src="https://gravity-software.com/js/shopify/slider_shopseg4298.js?v=71dcd9eb8b563584825908710fa7e98b"></script> <link rel="stylesheet" href="https://gravity-software.com/js/shopify/rondell/jquery.rondellf4298.css?v=71dcd9eb8b563584825908710fa7e98b"/> 
+ {% if product.variants.size > 1 %}<script>
+var variantImagesByVarianName = {};
+
+ var variantImagesGS = {},
+    thumbnails,
+    variant,
+    variantImage,
+    optionValue,
+    cntImages;
+    productOptions = [];
+    cntImages = 0;
+    {% for variant in product.variants %}
+       variant = {{ variant | json }};
+       if ( typeof variant.featured_image !== 'undefined' && variant.featured_image !== null ) {
+         variantImage =  variant.featured_image.src.split('?')[0].replace(/http(s)?:/,'');
+         variantImagesGS[variant.id] = variantImage;
+         variantImagesByVarianName[variant.option1] = variantImage;
+         cntImages++;
+       }
+    {% endfor %}
+                if(cntImages == 0) {
+          variantImagesGS = undefined;
+                }
+</script> {% endif %}
+<script>
+
+var imageDimensionsWidth = {};
+var imageDimensionsHeight = {};
+var imageSrcAttr = {};
+var altTag = {};  
+
+  var productImagesGS = [];
+var productImagesGSUrls = [];
+{% for image in product.images %}
+  var productImageUrl = "{{ image.src }}";
+  var dotPosition = productImageUrl.lastIndexOf(".");
+  productImageUrl = productImageUrl.substr(0, dotPosition);
+  productImagesGS.push(productImageUrl);
+  imageDimensionsWidth[{{ image.id }}] = "{{ image.width }}";
+  imageDimensionsHeight[{{ image.id }}] = "{{ image.height }}";
+  altTag[{{ image.id }}] = "{{ image.alt | replace: '"', '\"' }}";
+  imageSrcAttr[{{ image.id }}] = "{{ image.src }}";
+  productImagesGSUrls.push("{{ image.src | | img_url: '240x' }}");
+{% endfor %}
+</script>
+
+{% endif %}<!-- Slider code end. Do not change GSEND --></head>
+
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >  
+
+ 
+  
+  {% include 'header-bar' %}
+  <div class="msticky_header header-bar">
+    <div class="wrapper post-large--hide">
+      <div class="mobile_menu">
+        <button type="button" class="mobile-nav-trigger" id="MobileNavTrigger_sticky">
+          <span class="icon icon-hamburger" aria-hidden="true"></span>      
+        </button>
+        <div class="mobile_logo">
+          {% if settings.logo_use_image %}
+          <a href="/" itemprop="url">
+            <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
+          </a>
+          {% else %}
+          <a href="/" itemprop="url">{{ shop.name }}</a>
+          {% endif %}
+        </div>
+
+        <a href="/cart" class="cart-page-link mobile-cart-page-link">
+          <img src="{{ 'mobile_cart.png' | asset_url}}" alt="Cart" />
+        </a>
+        
+        <a href="tel:{{ settings.header_message }}" class="mobile_call">
+          <img src="{{ 'mobile_call.png' | asset_url}}" alt="Call us" />
+        </a>
+        
+        {%if settings.header_search_enable %}
+        <div class="header-bar__module header-bar__search">
+          <a href="javascript:void(0);" class="search_span" >Search</a>
+          {% include 'search-bar' with 'header' %}
+        </div>
+        {% endif %}
+      </div>
+    </div>  
+  	<ul id="MobileNav_sticky" class="mobile-nav post-large--hide" style="display:none;">  
+        {% for link in linklists.main-menu-mobile.links %}
+        {% assign child_list_handle = link.title | handleize %}
+        <li class="mobile-nav__link" aria-haspopup="true">
+          {% if linklists[child_list_handle].links != blank %}
+          <a href="{{ link.url }}" class="mobile-nav__sublist-trigger">
+            {{ link.title }}
+            {% include 'mobile-nav-icons' %}
+          </a>
+          <ul class="mobile-nav__sublist">  
+            {% for link in linklists[child_list_handle].links %}
+            <li class="mobile-nav__sublist-link">
+              <a href="{{ link.url }}">{{ link.title }}</a>
+              {% assign sub_child_list_handle = link.title | handleize %}
+              {% if linklists[sub_child_list_handle].links != blank %}
+              <ul class="msub_list_ul">
+                {% for sub_childlink in linklists[sub_child_list_handle].links %}              			
+                <li class="msub_list">
+                  <a href="{{sub_childlink.url}}" >- {{ sub_childlink.title | escape }}</a>
+                </li>
+                {%endfor%}          	          
+              </ul>
+              {%endif%}
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <a href="{{ link.url }}" class="mobile-nav">
+            {{ link.title }}
+          </a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+  </div>
+  
+  {% if settings.valentine_enable %}  
+  	<div class="wrapper">
+      <div class="valentine_wrap">
+    	<img src="https://cdn.shopify.com/s/files/1/1233/9260/files/valentine-empty.png?680875109997572456" class="valentine_banner" alt="" />        
+      </div>
+  </div>
+  {%endif%}
+  
+  <header class="site-header" role="banner">
+    <div class="wrapper">
+
+      {% if settings.nav_below_logo %}
+
+      <div class="grid--full">
+        <div class="grid__item medium--one-third text-left">
+           {% if settings.header_message != blank %}
+            <p class="header-message">
+              <span>{{ settings.header_message }} <small>(24/7)</small></span>
+            </p>
+          {% endif %}
+        </div>
+        <div class="grid__item medium--one-third logo_wrap">
+          
+          {% if template == 'index' %}
+            <h1 class="site-header__logo{% if settings.left_aligned_logo %} post-large--left{% endif %}" itemscope itemtype="http://schema.org/Organization">
+          {% else %}
+            <div class="h1 site-header__logo{% if settings.left_aligned_logo %} post-large--left{% endif %}" itemscope itemtype="http://schema.org/Organization">
+          {% endif %}
+            {% if settings.logo_use_image %}
+              <a href="/" itemprop="url">
+                <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
+              </a>
+            {% else %}
+              <a href="/" itemprop="url">{{ shop.name }}</a>
+            {% endif %}
+          {% if template == 'index' %}
+            </h1>
+          {% else %}
+            </div>
+          {% endif %}                                        
+        </div>
+        <div class="grid__item medium--one-third text-right search_cart">            
+            <div class="header-bar__module">              
+              <a href="/cart" class="cart-page-link">
+                <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true">CART({{cart.item_count}})</span>
+              </a>
+            </div>
+          	{%if settings.header_search_enable %}
+                <div class="header-bar__module header-bar__search">
+                  <a href="javascript:void(0);" class="search_span" >Search</a>
+                  {% include 'search-bar' with 'header' %}
+                </div>
+            {% endif %}
+        </div>
+      </div>
+      
+      
+      
+
+      {% else %}
+
+      <div class="grid--full post-large--display-table">
+        <div class="grid__item post-large--one-third post-large--display-table-cell">
+          {% if template == 'index' %}
+            <h1 class="site-header__logo post-large--left" itemscope itemtype="http://schema.org/Organization">
+          {% else %}
+            <div class="h1 site-header__logo post-large--left" itemscope itemtype="http://schema.org/Organization">
+          {% endif %}
+            {% if settings.logo_use_image %}
+              <a href="/" itemprop="url">
+                <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
+              </a>
+            {% else %}
+              <a href="/" itemprop="url">{{ shop.name }}</a>
+            {% endif %}
+          {% if template == 'index' %}
+            </h1>
+          {% else %}
+            </div>
+          {% endif %}
+          {% if settings.header_message != blank %}
+            <p class="header-message post-large--hide">
+              <small>{{ settings.header_message }}</small>
+            </p>
+          {% endif %}
+        </div>
+        <div class="grid__item post-large--two-thirds post-large--display-table-cell medium-down--hide">
+          <div class="wrapper">
+          	{% include 'site-nav' %}
+          </div>
+        </div>
+      </div>
+
+      {% endif %}
+
+    </div>
+  </header>
+ <div class="grid--full medium-down--hide ">
+        <div class="grid__item site_navmenu">
+          <div class="wrapper">
+            <div class="sticky_logo">
+                {% if settings.logo_use_image %}
+                  <a href="/" itemprop="url">
+                    <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
+                  </a>
+                {% else %}
+                  <a href="/" itemprop="url">{{ shop.name }}</a>
+                {% endif %}
+            </div>
+          	{% include 'site-nav-mega' %}
+            <div class="sticky_cart search_cart">
+                <div class="header-bar__module">              
+                  <a href="/cart" class="cart-page-link">
+                    <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true">CART({{cart.item_count}})</span>
+                  </a>
+                </div>
+                {%if settings.header_search_enable %}
+                    <div class="header-bar__module header-bar__search">
+                      <a href="javascript:void(0);" class="search_span" >Search</a>
+                      {% include 'search-bar' with 'header' %}
+                    </div>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  <main class="wrapper main-content" role="main">
+    {%if template == 'index'%}
+      <div class="large--hide wide--hide">
+        <span class="easy_returns text-center">Free Shipping & Easy Returns</span>
+      </div>
+    {%endif%}
+    <div class="grid">
+        <div class="grid__item">
+          {% comment %}{{ content_for_layout }}{% endcomment %}{% include 'easylockdown_body' %}
+        </div>
+    </div>
+  </main>
+
+  <div class="footer_top">
+    <div class="wrapper">
+      <div class="grid">
+        <div class="grid__item small--one-whole one-third large--one-third text-center">
+          <img src="{{ 'diamond.png' | asset_url}}" alt />
+          <h2 class="section-header__title">{{settings.contact_heading}}</h2>
+          <p>{{settings.footer_contact_text}}</p>
+          <a href="{{settings.footer_contact_link}}" target="_blank" class="readmore">Read More</a>
+        </div>
+        <div class="grid__item small--one-whole one-third large--one-third text-center">
+          	<div class="social_wrap">
+            {% if settings.footer_social_enable %}                                        
+              {% include 'social-links' %}              
+            {% endif %}
+              <h2 class="section-header__title">{{settings.social_heading}}</h2>
+              <p>{{settings.footer_social_text}}</p>
+              <!-- <a href="{{settings.footer_social_link}}" target="_blank" class="readmore">Read More</a> -->
+            </div>
+        </div>
+        <div class="grid__item small--one-whole one-third large--one-third text-center">
+          <div class="newsletter_wrap">
+            {% if settings.footer_newsletter_enable %}            
+            	{% include 'newsletter-form' %}                          	              
+            {% endif %}
+            <h2 class="section-header__title">{{settings.newsletter_heading}}</h2>
+            <p>{{settings.footer_newsletter_text}}</p>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="site-footer small--text-center" role="contentinfo">
+
+    <div class="wrapper">
+
+      <div class="grid-uniform ">                   
+		<div class="grid__item footer_contact medium--one-half">
+          <a href="{{shop.url}}">
+          	<img src="{{ 'footer_logo.png' | asset_url}}" alt="{{shop.title}}" />
+          </a>
+          {% if settings.header_message != blank %}
+            <p class="header-message">
+              <span>{{ settings.header_message }} &nbsp;|&nbsp; 24/7</span>
+            </p>
+          {%endif%}
+          <div class="footer_cart">   
+            <div class="search_cart">
+          	{%if settings.header_search_enable %}
+                <div class="header-bar__module header-bar__search">
+                  <a href="javascript:void(0);" class="search_span" >Search</a>
+                  {% include 'search-bar' with 'header' %}
+                </div>
+            {% endif %}            
+              <div class="header-bar__module">              
+                <a href="/cart" class="cart-page-link">
+                  <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true">CART({{cart.item_count}})</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% if settings.footer_quicklinks_enable %}
+          <div class="grid__item post-large--one-fifth medium--one-half">            
+            <h4>{{ linklists[settings.footer_quicklinks_linklist].title }}</h4>     
+            <ul class="site-footer__links{% if num_footer_columns == 1 %} inline-list{% endif %}">
+              {% for link in linklists[settings.footer_quicklinks_linklist].links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if settings.footer_second_menu_enable %}
+          <div class="grid__item post-large--one-fifth medium--one-half">
+            <h4>{{ linklists[settings.footer_second_menu].title }}</h4>
+            <ul class="site-footer__links">
+              {% for link in linklists[settings.footer_second_menu].links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}        
+
+        {% if settings.footer_second_menu2_enable %}
+          <div class="grid__item post-large--one-fifth medium--one-half">
+            <h4>{{ linklists[settings.footer_second_menu2].title }}</h4>
+            <ul class="site-footer__links">
+              {% for link in linklists[settings.footer_second_menu2].links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+            {% if settings.footer_second_menu3_enable %}            
+            	<h4>{{ linklists[settings.footer_second_menu3].title }}</h4>
+                <ul class="site-footer__links">
+                  {% for link in linklists[settings.footer_second_menu3].links %}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {% endfor %}
+                </ul>
+            {%endif%}
+          </div>
+        {% endif %}   
+        
+      </div>      
+      
+      <hr class="hr--small hr--clear">
+
+      {% if settings.footer_show_methods_of_payment %}
+        {% unless shop.enabled_payment_types == empty %}
+        <div class="grid">
+           <div class=" text-center">
+             <ul class="inline-list payment-icons">
+               {% for type in shop.enabled_payment_types %}
+                 <li>
+                   <span class="icon-fallback-text">
+                     <span class="icon icon-{{type}}" aria-hidden="true"></span>
+                     <span class="fallback-text">{{ type | replace: '_', ' ' }}</span>
+                   </span>
+                 </li>
+               {% endfor %}
+             </ul>
+           </div>
+         </div>
+         {% endunless %}
+       {% endif %}      
+
+      <div class="">
+        <div class=" text-center">
+          <p class="site-footer__links"><a href="{{shop.url}}/pages/privacy-policy/">Privacy Policy </a>&bullet;<a href="{{shop.url}}/pages/terms-of-use/"> Terms of Use</a></p>
+          <p class="site-footer__links">{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}. </p>
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </footer>
+  
+  <div id="popup_overlay"></div>
+
+  
+  
+  
+  
+  {% for i in (1..4) %}
+    {% capture home_section %}home_section_{{ i }}{% endcapture %}
+    {% if settings[home_section] == 'slider' %}
+      {% assign slider_home_enable = true %}
+    {% endif %}
+  {% endfor %}
+
+  
+    {{ 'jquery.flexslider.min.js' | asset_url | script_tag }}
+    {{ 'slider.js' | asset_url | script_tag }}
+  
+
+  {{ 'fastclick.min.js' | asset_url | script_tag }}
+  {{ 'timber.js' | asset_url | script_tag }}
+  {{ 'theme.js' | asset_url | script_tag }}
+  {{ 'jquery.cookie.js' | asset_url | script_tag }}
+  {{ 'custom.js' | asset_url | script_tag }}
+  
+  {% if template contains 'product' %}
+    {% if settings.product_image_zoom_type == 'lightbox'  %}
+      {{ 'magnific-popup.min.js' | asset_url | script_tag }}
+    {% elsif settings.product_image_zoom_type == 'zoom-in' %}
+      {{ 'jquery.zoom.min.js' | asset_url | script_tag }}
+    {% endif %}
+  {% endif %}
+
+  {% if template contains 'article' or template contains 'product' %}
+    {% if settings.social_sharing_blog or settings.social_sharing_products %}
+      {{ 'social-buttons.js' | asset_url | script_tag }}
+    {% endif %}
+  {% endif %}
+
+<script src="{{ 'jquery.responsiveTabs.min.js' | asset_url}}" type="text/javascript"></script>  
+<script type="text/javascript">	
+  	var stickyNavTop = $('#AccessibleNav').offset().top;  
+	var MstickyNavTop = $('.header-bar').offset().top;  
+      var stickyNav = function(){  
+        var scrollTop = $(window).scrollTop();  
+
+        if (scrollTop > stickyNavTop) {   
+          $('#AccessibleNav').parent().parent().addClass('sticky');           
+          $('body').addClass('sticky-move'); 
+        } else {  
+          $('#AccessibleNav').parent().parent().removeClass('sticky');           
+          $('body').removeClass('sticky-move');
+        }    
+        if($(window).width() <=768){
+          if (scrollTop > stickyNavTop) {            
+            $('.msticky_header').addClass('sticky');
+            $('body').addClass('sticky-move'); 
+          } else {            
+            $('.msticky_header').removeClass('sticky');
+            $('body').removeClass('sticky-move');
+          }    
+        }
+      };    
+
+      stickyNav();  
+  	$(window).scroll(function() {  
+        stickyNav();  
+      });
+jQuery(document).ready(function(){  
+  $(document).on('click', '#popup_wrap .popup_close', function(e){    
+  		$('#popup_wrap').hide();
+    	$('.popup_data').hide();
+    	$('#popup_overlay').hide();
+  });
+  $('#popup_overlay').click(function(){
+  	$('#popup_wrap').hide();
+    $('.popup_data').hide();
+    $('#popup_overlay').hide();
+  });
+});
+</script>
+  
+
+<script type="text/javascript" src="https://cdn.ywxi.net/js/1.js" async></script>
+  
+
+  <!-- BEEKETINGSCRIPT CODE START -->{% include 'bk-tracking' %}<!-- BEEKETINGSCRIPT CODE END -->{% include 'findify-tagging' %}
+
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TSMM3NK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  
+</body>
+</html>

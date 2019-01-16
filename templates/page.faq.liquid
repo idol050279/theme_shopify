@@ -1,0 +1,42 @@
+<div class="banner_wrap2" style="background:url({{'faq_banner.jpg' | asset_url}});">
+  <img src="{{ 'faq_banner_mobile.jpg' | asset_url }}" alt="{{page.title}}" />
+    <h1>{{page.title}}</h1>
+</div>  
+
+<div class="grid">  
+  <div class="grid__item medium--ten-twelfths large--ten-twelfths wide--ten-twelfths push--one-twelfth faq_wrap">    
+    
+      {{ page.content }}
+    
+  </div>
+</div>
+
+<div class="grid grid-uniform faq_data_wrap">
+  <h2>More About Us</h2>
+  <div class="grid__item one-third">
+    <div class="about_data">
+      <a href="{{settings.about_col5_link}}">
+      <img src="{{ 'about_col5.jpg' | asset_url}}" alt="" />
+      <h2>{{settings.about_col5_title}}</h2>      
+      </a>
+    </div>
+  </div>
+  <div class="grid__item one-third">    
+    <div class="about_data">
+      <a href="{{settings.about_col2_link}}">
+      <img src="{{ 'about_col2.jpg' | asset_url}}" alt="" />
+      <h2>{{settings.about_col2_title}}</h2>      
+      </a>
+    </div>
+  </div>
+  <div class="grid__item one-third">
+    <div class="about_data">
+      <a href="{{settings.about_col3_link}}">
+      <img src="{{ 'about_col3.jpg' | asset_url}}" alt="" />
+      <h2>{{settings.about_col3_title}}</h2>      
+      </a>
+    </div>
+  </div>  
+</div>
+
+

@@ -1,0 +1,1580 @@
+<div itemscope itemtype="http://schema.org/Product">
+
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+  <div class="section-header section-header--breadcrumb">
+    {% include 'breadcrumb' %}
+  </div>
+
+  <div class="product-single">
+    <div class="grid product-single__hero">
+      <div class="grid__item post-large--one-half">
+		<h1 itemprop="name" class="mobile_hide">{{ product.title }}</h1>
+        <div class="pro_rd_wrap mobile_hide">
+          <div class="pro_review_totla">
+            <a href="#tab-1">
+            	<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+            </a>
+            <!--
+            <div class="spr-form-input">
+              <a href="#tab-1" class="star" data-value="1">
+              	<img src="{{ 'star_md.png' | asset_url }}" alt="star" />
+              </a>
+              <a href="#tab-1" class="star" data-value="2">
+              	<img src="{{ 'star_md.png' | asset_url }}" alt="star" />
+              </a>
+              <a href="#tab-1" class="star" data-value="3">
+              	<img src="{{ 'star_md.png' | asset_url }}" alt="star" />
+              </a>
+              <a href="#tab-1" class="star" data-value="4">
+              	<img src="{{ 'star_md.png' | asset_url }}" alt="star" />
+              </a>
+              <a href="#tab-1" class="star" data-value="5">
+              	<img src="{{ 'star_md.png' | asset_url }}" alt="star" />
+              </a>
+            </div>  -->
+            
+          </div>          
+        </div>
+        {% if settings.product_thumbnails_position == 'below' or product.images.size < 2 %}
+
+        <div class="product-single__photos medium--hide small--hide" id="ProductPhoto">
+          {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+          <img src="{{ featured_image | img_url: '1024x1024' }}" alt="{{ product.title | escape }}" id="ProductPhotoImg"{% if settings.product_image_zoom_type == 'zoom-in' %} data-zoom="{{ featured_image | img_url: '1024x1024' }}"{% endif %} data-image-id="{{ featured_image.id }}">
+          {% if product.images.size > 1 %}
+          <div class="mobile_hide pslider_arrows">
+            <a href="javascript:void(0);" class="left">&nbsp;</a>
+            <a href="javascript:void(0);" class="right">&nbsp;</a>
+          </div>
+          {%endif%}
+        </div>
+
+          {% if product.images.size > 1 %}
+
+          <ul class="product-single__thumbnails grid-uniform small--hide medium--hide" id="ProductThumbs">
+            {% for image in product.images %}
+            <li class="grid__item wide--one-quarter large--one-third medium-down--one-quarter">
+              <a data-image-id="{{ image.id }}" href="{{ image.src | img_url: '1024x1024' }}" class="product-single__thumbnail {%if forloop.first%} active{%endif%}">
+                <div><img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}" ></div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+
+          {% endif %}
+          <div class="mobile_hide">
+            {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+            <div class="prod_slider">
+              <ul class="slides">
+                {% for image in product.images %}
+                {% assign easyvideo = '' %}{% if image.alt contains 'youtube' or image.alt contains 'vimeo' %}{% assign easyvideo = 'transform-to-video' %}{% endif %}
+                <li data-thumb="{{ image.src | img_url: 'compact' }}">
+                  <div>
+                    <img src="{{ image.src | img_url: '1024x1024' }}" alt="{{ image.alt | escape }}"  class="{{ easyvideo }}" />
+                  </div>
+                </li>
+                {%endfor%}
+              </ul>
+            </div>            
+          </div>
+        {% else %}
+
+        <div class="grid">
+
+          <div class="grid__item four-fifths product-single__photos" id="ProductPhoto">
+            {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+            <img src="{{ featured_image | img_url: '1024x1024' }}" alt="{{ product.title | escape }}" id="ProductPhotoImg"{% if settings.product_image_zoom_type == 'zoom-in' %} data-zoom="{{ featured_image | img_url: '1024x1024' }}"{% endif %} data-image-id="{{ featured_image.id }}">
+          </div>
+
+          <div class="grid__item one-fifth">
+
+            <ul class="grid product-single__thumbnails" id="ProductThumbs">
+              {% for image in product.images %}
+              <li class="grid__item">
+                <a data-image-id="{{ image.id }}" href="{{ image.src | img_url: '1024x1024' }}" class="product-single__thumbnail {%if forloop.first%} active{%endif%}">
+                  <img src="{{ image.src | img_url: 'grande' }}" alt="{{ image.alt | escape }}">
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+
+          </div>
+
+        </div>
+
+        {% endif %}
+
+        {% if settings.product_image_zoom_type == 'lightbox' %}
+        <ul class="gallery" class="hidden">
+          {% for image in product.images %}
+          <li data-image-id="{{ image.id }}" class="gallery__item" data-mfp-src="{{ image | img_url: '1024x1024' }}"></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+      </div>
+      <div class="grid__item post-large--one-half">        
+        <h1 itemprop="name" class="title small--hide medium--hide">{{ product.title }}</h1>
+		<div class="pro_rd_wrap small--hide medium--hide">
+          <div class="pro_review_totla">
+            <a href="#tab-1">
+            	<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+            </a>
+            <!--
+            <div class="spr-form-input">
+              <a href="#tab-1" class="star" data-value="1">
+              	<img src="{{ 'star.png' | asset_url }}" alt="star" />
+              </a>
+              <a href="#tab-1" class="star" data-value="2">
+              	<img src="{{ 'star.png' | asset_url }}" alt="star" />
+              </a>
+              <a href="#tab-1" class="star" data-value="3">
+              	<img src="{{ 'star.png' | asset_url }}" alt="star" />
+              </a>
+              <a href="#tab-1" class="star" data-value="4">
+              	<img src="{{ 'star.png' | asset_url }}" alt="star" />
+              </a>
+              <a href="#tab-1" class="star" data-value="5">
+              	<img src="{{ 'star.png' | asset_url }}" alt="star" />
+              </a>
+            </div>  -->
+            
+          </div>          
+        </div>
+        {%assign show_price = 'false'%}
+        {%for tag in product.tags%}
+        	{%if tag == 'show_price' %}
+        		{%assign show_price = 'true' %}
+        	{%endif%}
+        {%endfor%}
+        <div class="price_wrap small--hide medium--hide ">
+          <div class="product-single__prices" style="visibility: visible;" >
+            <span id="ProductPrice" class="product-single__price active" itemprop="price">
+              {{ product.price | money | remove: '.00'}}
+            </span>
+            
+            {% if product.compare_at_price > product.price %}
+            <span id="" class="product-single__sale-price">Reg. Price {{ product.compare_at_price_max | money | remove: '.00'}}</span>
+            {% endif %}
+                        
+          </div>
+          <div class="a_delivery_date">
+            <span class="txt">Estimated Delivery Date</span>
+            <span class="d_date"></span>
+            <a href="javascript:void(0);" >
+            	<span class="rush_order">Rush order?</span>
+            </a>
+          </div>
+        </div>
+        {%assign fdesc = product.description | split:'<!--second_desc-->' | first %}
+        <div class="product-description rte" itemprop="description">
+          {{fdesc}}
+        </div>
+        
+        <div class="price_wrap mobile_hide">
+          <div class="product-single__prices" style="visibility: visible;">
+            <span id="ProductPrice" class="product-single__price active" itemprop="price">
+              {{ product.price | money | remove: '.00'}}
+            </span>
+            
+            {% if product.compare_at_price > product.price %}
+            <span id="" class="product-single__sale-price">Reg. Price {{ product.compare_at_price_max | money | remove: '.00'}}</span>
+            {% endif %}
+                        
+          </div>
+          <div class="a_delivery_date">
+            <span class="txt">Estimated Delivery Date</span>
+            <span class="d_date"></span>
+            <a href="javascript:void(0);" >
+            	<span class="rush_order">Rush order?</span>
+            </a>
+          </div>
+        </div>
+        
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="form-wrap">
+          {% assign variant = product.selected_or_first_available_variant %}
+
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+          
+          
+          <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+            
+            <div class="pro_variant_wrap">
+            <select name="id" id="productSelect" class="product-single__variants">
+              {% for variant in product.variants %} 
+                {% if variant.available %}
+                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+
+                {% else %}
+              
+                  <option disabled="disabled">
+                    {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+              
+              <div class="selector-wrapper size {% if product.options.size == 1 %} one {%endif%}">
+              <label>Size:</label>
+              <select class="single-option-selector" data-option="option2" id="productSelect-option-2" name="properties[size]">
+                <option value="Select Size">Select Size</option>
+                <option value="Not Sure">Not Sure</option>
+                <option value="US 4">US 4</option>
+                <option value="US 4.25">US 4.25</option>
+                <option value="US 4.5">US 4.5</option>
+                <option value="US 4.75">US 4.75</option>
+                <option value="US 5">US 5</option>
+                <option value="US 5.25">US 5.25</option>
+                <option value="US 5.5">US 5.5</option>
+                <option value="US 5.75">US 5.75</option>
+                <option value="US 6">US 6</option>
+                <option value="US 6.25">US 6.25</option>
+                <option value="US 6.5">US 6.5</option>
+                <option value="US 6.75">US 6.75</option>
+                <option value="US 7">US 7</option>
+                <option value="US 7.25">US 7.25</option>
+                <option value="US 7.5">US 7.5</option>
+                <option value="US 7.75">US 7.75</option>
+                <option value="US 8">US 8</option>
+                <option value="US 8.25">US 8.25</option>
+                <option value="US 8.5">US 8.5</option>
+                <option value="US 8.75">US 8.75</option>
+                <option value="US 9">US 9</option>
+                <option value="US 9.25">US 9.25</option>
+                <option value="US 9.5">US 9.5</option>
+                <option value="US 9.75">US 9.75</option>
+                <option value="US 10">US 10</option>
+                <option value="US 10.25">US 10.25</option>
+                <option value="US 10.5">US 10.5</option>
+                <option value="US 10.75">US 10.75</option>
+                <option value="US 11">US 11</option>
+                <option value="US 11.25">US 11.25</option>
+                <option value="US 11.5">US 11.5</option>
+                <option value="US 11.75">US 11.75</option>
+                <option value="US 12">US 12</option>
+              </select>
+              </div>
+              <a href="javascript:void(0);" class="ring_size">Find your ring size?</a>
+            </div>
+            <div class="product-single__quantity{% unless settings.product_quantity_enable %} is-hidden{% endunless %}">
+              <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+              <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+            </div>
+
+			
+            <button type="submit" name="add" id="AddToCart" class="btn">
+              <img src="{{ 'add_cart_icon.png' | asset_url }}" alt="Add to cart" class="add_cart"/>
+              <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>              
+            </button>
+			                        
+            	<a href="javascript:void(0);" class="btn pcustomize"><img src="https://cdn.shopify.com/s/files/1/1233/9260/files/inquiry.PNG?1288186708382434050" alt="" class="pc_pencil" /> Get A Quote</a>
+            
+            <span class="drophint-link"></span>
+          </form>
+      
+        </div>
+		<div class="contact_data">
+          <div class="small--hide medium--hide">
+            <span>Any Questions:</span>
+          	<a href="#" onclick="tidioChatApi.chatDisplay(true);tidioChatApi.popUpOpen(); return false;" class="livechat">Live Chat</a>
+            <a href="tel:18002317851" class="callus">(+1) 800-231-7851</a>
+            <a href="#tab-2" class="mailus">Email Us</a>       
+          </div>
+          <div class="mobile_hide">
+            <span>Any Questions:</span>
+          	<a href="#" onclick="chatShow()" class="livechat">
+              <img src="{{ 'livechat2.png' | asset_url}}" alt="Live Chat" /><span>Live Chat</span></a>
+            <a href="tel:18002317851" class="callus">
+              <img src="{{ 'callus2.png' | asset_url}}" alt="" /><span>(+1) 800-231-7851</span></a>
+            <a href="#tab-2" class="mailus">
+              <img src="{{ 'email2.png' | asset_url}}" alt="" /><span>Email Us</span></a>
+          </div>
+        </div>
+        <div class="social_wrap">
+          <div class="social_wrap2">
+            {% if settings.social_sharing_products %}              
+              <h4>{{ 'products.general.share_title' | t }}</h4>
+              {% include 'social-sharing' %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="grid grid-uniform promo-images">
+            <div class="grid__item small--one-half medium--one-half one-quarter">
+              <div class="pc_img_wrap">
+                <a href="https://segaljewellery.com/pages/risk-free-30-day-returns?ref=p-page" target="_blank"><img src="{{ 'risk_free.png' | asset_url}}" alt="Risk Free" /></a>
+              </div>
+              <center>
+                <a href="https://segaljewellery.com/pages/risk-free-30-day-returns?ref=p-page" target="_blank">Risk free returns</a>
+              </center>
+            </div>
+            <div class="grid__item small--one-half medium--one-half one-quarter">
+              <div class="pc_img_wrap">
+                <a href="https://segaljewellery.com/pages/lifetime-warranty?ref=p-page" target="_blank"><img src="{{ 'warranty.png' | asset_url }}" alt="Segal Jewelry Warrenty" /></a>
+              </div>
+              <center>
+                <a href="https://segaljewellery.com/pages/lifetime-warranty?ref=p-page" target="_blank">Lifetime warrenty</a>
+              </center>      
+            </div>
+            <div class="grid__item small--one-half medium--one-half one-quarter">
+              <div class="pc_img_wrap">
+                <a href="https://segaljewellery.com/pages/free-worldwide-shipping?ref=p-page" target="_blank"><img src="{{ 'dhl.png' | asset_url }}" alt="Free Shipping" /></a>
+              </div>
+              <center>
+                <a href="https://segaljewellery.com/pages/free-worldwide-shipping?ref=p-page" target="_blank">Free shipping</a>
+              </center>            
+            </div>
+          	<div class="grid__item small--one-half medium--one-half one-quarter">
+              <div class="pc_img_wrap">
+              	<a href="https://segaljewellery.com/pages/secured-payments?ref=p-page" target="_blank"><img src="{{ 'secure_payments.png' | asset_url }}" alt="Secure Payments" /></a>
+              </div>
+              <center>
+                <a href="https://segaljewellery.com/pages/secured-payments?ref=p-page" target="_blank">Secure payment</a>
+              </center>            
+            </div>          
+          </div> 
+          <!-- <a href="#" class="learn_more">Learn more</a>-->
+        
+      </div>
+    </div>
+    {% include 'cross-sell-custom' %}
+    <div class="grid">
+      <div class="grid__item medium--one-whole">
+        <a href="#tab-2"><img src="https://cdn.shopify.com/s/files/1/1233/9260/files/Buy-now-paid-later.jpg?9575890656060849963" alt="" class="pay_banner_desktop"/></a> <!-- <img src="{{ 'pay_banner.jpg' | asset_url}}" alt="" class="pay_banner_desktop"/> --> 
+        <a href="#tab-2"><img src="https://cdn.shopify.com/s/files/1/1233/9260/files/Buy-now_-paid-later-mobile.jpg?3036614458577081426" alt="" class="pay_banner_mobile"/></a><br/> <!-- <img src="{{ 'mobile_productpagebanner.jpg' | asset_url}}" alt="" class="pay_banner_mobile"/><br/> -->
+        <div class="order_includes">
+          <div class="text_wrap">         
+          	<h3>Your order includes</h3>
+          	<ul>
+              <li>Quality Packaging</li>  
+              <li>Diamond certificate</li>  
+              <li>Free DHL express Shipping</li>  
+              <li>30-day returns</li>  
+              <li>100% Refund guarantee</li>  
+              <li>Lifetime Warranty</li>  
+              <li>Free returns (U.S. Only)</li>                  
+          	</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="grid__item medium--one-whole ring_info">
+        {%comment%}
+      	<div class="pro_fimg">
+          {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+          <img src="{{ featured_image | img_url: 'medium' }}" alt="{{ featured_image.alt | escape }}" />
+        </div>
+        {%endcomment%}
+        <div class="pro_sdesc">          
+          <h2>Ring information</h2>
+          {%assign sdesc = product.description | split:'<!--second_desc-->' | last %}
+          {{sdesc}}
+        </div> 
+	   
+      </div>
+    </div>
+    <div class="grid">
+      <div class="grid__item medium--one-whole">
+        <div id="horizontalTab">
+          <ul>
+            <li><a href="#tab-1">Reviews</a></li>
+            <li><a href="#tab-2">Questions</a></li>
+          </ul>
+          <div id="tab-1">
+            <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+          </div>
+          <div id="tab-2">
+            <div class="grid">
+              <div class="grid__item post-large--one-whole push--post-large--one">
+                <center>
+                  <div class="section-header">
+                    <h2 class="section-header--title" style="text-align:center;">Have a question ? Fill this form</h2>
+                  </div>
+                  <div class="rte">
+                    {{ page.content }}
+                  </div>
+
+                  <div class="questions_wrap">
+                   {% comment %} 
+                    {% form 'contact' %}
+
+                    {% if form.posted_successfully? %}
+                    <p class="note form-success">
+                      {{ 'contact.form.post_success' | t }}
+                    </p>
+                    {% endif %}
+
+                    {{ form.errors | default_errors }}
+                    {% assign name_attr = 'contact.form.name' | t | handle %}
+                    <input id="cid" name="contact[cid]" type="hidden" value="">
+					<input id="gclid" name="contact[gclid]" type="hidden" value="">
+                    
+                    <label for="ContactFormName" class="label--hidden">{{ 'contact.form.name' | t }}</label>
+                    <input type="text" id="ContactFormName" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+
+                    <label for="ContactFormEmail" class="label--hidden">{{ 'contact.form.email' | t }}</label>
+                    <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}*" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+
+                    {% assign name_attr = 'contact.form.phone' | t | handle %}
+                    <label for="ContactFormPhone" class="label--hidden">{{ 'contact.form.phone' | t }}</label>
+                    <input type="tel"  id="ContactFormPhone" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.phone' | t }}*" pattern="[0-9\-]*" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.phone }}{% endif %}" required>
+
+                    <input type="text" id="ContactFormSecure" name="contact[secure]" value="" placeholder="Size" style="display:none;">
+                    
+                    <label for="ContactFormMessage" class="label--hidden">{{ 'contact.form.message' | t }}</label>
+                    <textarea rows="5" id="ContactFormMessage" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+                    <input type="submit" class="btn button" value="{{ 'contact.form.send' | t }}">
+
+                    {% assign name_attr = 'contact.form.page' | t | handle %}
+                    <label for="ContactFormPage" class="label--hidden">{{ 'contact.form.page' | t }}</label>
+                    <input type="hidden"  style="width:75%;" id="ContactFormPage" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.page' | t }}" pattern="[0-9\-]*" value="{{ shop.url }}{{ product.url }}">
+
+                    {% endform %}
+          {% endcomment %} 
+                    
+                    <form method="POST" action="https://goldstonebrands.activehosted.com/proc.php" id="_form_4_" class="_form _form_4 _inline-form  _dark" novalidate>
+  <input type="hidden" name="u" value="4" />
+  <input type="hidden" name="f" value="4" />
+  <input type="hidden" name="s" />
+  <input type="hidden" name="c" value="0" />
+  <input type="hidden" name="m" value="0" />
+  <input type="hidden" name="act" value="sub" />
+  <input type="hidden" name="v" value="2" />
+  <div class="_form-content">
+    <div class="_form_element _x49420582 _full_width " >
+      <label class="_form-label">
+      </label>
+      <div class="_field-wrapper">
+        <input type="text" name="fullname" placeholder="Your name" />
+      </div>
+    </div>
+    <div class="_form_element _x98536016 _full_width " >
+      <label class="_form-label">
+      </label>
+      <div class="_field-wrapper">
+        <input type="text" name="email" placeholder="Your email" required/>
+      </div>
+    </div>
+    <div class="_form_element _x26840070 _full_width " >
+      <label class="_form-label">
+      </label>
+      <div class="_field-wrapper">
+        <input type="text" name="phone" placeholder="Your phone number" />
+      </div>
+    </div>
+    <div class="_form_element _field1 _full_width " >
+      <label class="_form-label">
+      </label>
+      <div class="_field-wrapper">
+        <textarea name="field[1]" placeholder="Message" style="height: 125px;" ></textarea>
+      </div>
+    </div>
+    <div class="_form_element _field3 _full_width " >
+      <input type="hidden" name="field[3]" value="" />
+    </div>
+    <div class="_form_element _field4 _full_width " >
+      <input type="hidden" name="field[4]" value="" />
+    </div>
+      <div class="_form_element _field7 _full_width " >
+      <input id="field7" type="hidden" name="field[7]" value="" />
+    </div>
+    <div class="_form_element _field10 _full_width " >
+      <input id="field10" type="hidden" name="field[10]" value="" />
+    </div>
+    <div class="_form_element _field12 _full_width " style="display:none">
+      <div class="_field-wrapper">
+        <input type="text" name="field[12]" value="{{ product.price | money | remove: '.00'}}" placeholder="" />
+      </div>
+    </div>
+    <div class="_form_element _field13 _full_width " style="display:none">
+      <div class="_field-wrapper">
+        <input type="text" name="field[13]" value="{{product.title}}" placeholder="" />
+      </div>
+    </div>
+    <div class="_form_element _field14 _full_width " style="display:none">
+      <div class="_field-wrapper">
+        <input type="text" name="field[14]" value="{{ featured_image | img_url: '1024x1024' }}" placeholder="" />
+      </div>
+    </div>
+    <div class="_button-wrapper _full_width">
+      <button id="_form_4_submit" onclick="updateURL();" class="btn button _submit" type="submit">
+        SEND
+      </button>
+    </div>
+    <div class="_clear-element">
+    </div>
+  </div>
+  <div class="_form-thank-you" style="display:none;">
+  </div>
+</form><script type="text/javascript">
+window.cfields = {"1":"message","12":"pricefordeal","13":"ringnamefordeal","14":"pictureurl","3":"gclid","4":"cid","7":"ipaddress","10":"options"};
+window._show_thank_you = function(id, message, trackcmp_url) {
+  var form = document.getElementById('_form_' + id + '_'), thank_you = form.querySelector('._form-thank-you');
+  form.querySelector('._form-content').style.display = 'none';
+  thank_you.innerHTML = message;
+  thank_you.style.display = 'block';
+  if (typeof(trackcmp_url) != 'undefined' && trackcmp_url) {
+    // Site tracking URL to use after inline form submission.
+    _load_script(trackcmp_url);
+  }
+  if (typeof window._form_callback !== 'undefined') window._form_callback(id);
+};
+window._show_error = function(id, message, html) {
+  var form = document.getElementById('_form_' + id + '_'), err = document.createElement('div'), button = form.querySelector('button'), old_error = form.querySelector('._form_error');
+  if (old_error) old_error.parentNode.removeChild(old_error);
+  err.innerHTML = message;
+  err.className = '_error-inner _form_error _no_arrow';
+  var wrapper = document.createElement('div');
+  wrapper.className = '_form-inner';
+  wrapper.appendChild(err);
+  button.parentNode.insertBefore(wrapper, button);
+  document.querySelector('[id^="_form"][id$="_submit"]').disabled = false;
+  if (html) {
+    var div = document.createElement('div');
+    div.className = '_error-html';
+    div.innerHTML = html;
+    err.appendChild(div);
+  }
+};
+window._load_script = function(url, callback) {
+    var head = document.querySelector('head'), script = document.createElement('script'), r = false;
+    script.type = 'text/javascript';
+    script.charset = 'utf-8';
+    script.src = url;
+    if (callback) {
+      script.onload = script.onreadystatechange = function() {
+      if (!r && (!this.readyState || this.readyState == 'complete')) {
+        r = true;
+        callback();
+        }
+      };
+    }
+    head.appendChild(script);
+};
+(function() {
+  if (window.location.search.search("excludeform") !== -1) return false;
+  var getCookie = function(name) {
+    var match = document.cookie.match(new RegExp('(^|; )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+  }
+  var setCookie = function(name, value) {
+    var now = new Date();
+    var time = now.getTime();
+    var expireTime = time + 1000 * 60 * 60 * 24 * 365;
+    now.setTime(expireTime);
+    document.cookie = name + '=' + value + '; expires=' + now + ';path=/';
+  }
+      var addEvent = function(element, event, func) {
+    if (element.addEventListener) {
+      element.addEventListener(event, func);
+    } else {
+      var oldFunc = element['on' + event];
+      element['on' + event] = function() {
+        oldFunc.apply(this, arguments);
+        func.apply(this, arguments);
+      };
+    }
+  }
+  var _removed = false;
+  var form_to_submit = document.getElementById('_form_4_');
+  var allInputs = form_to_submit.querySelectorAll('input, select, textarea'), tooltips = [], submitted = false;
+
+  var getUrlParam = function(name) {
+    var regexStr = '[\?&]' + name + '=([^&#]*)';
+    var results = new RegExp(regexStr, 'i').exec(window.location.href);
+    return results != undefined ? decodeURIComponent(results[1]) : false;
+  };
+
+  for (var i = 0; i < allInputs.length; i++) {
+    var regexStr = "field\\[(\\d+)\\]";
+    var results = new RegExp(regexStr).exec(allInputs[i].name);
+    if (results != undefined) {
+      allInputs[i].dataset.name = window.cfields[results[1]];
+    } else {
+      allInputs[i].dataset.name = allInputs[i].name;
+    }
+    var fieldVal = getUrlParam(allInputs[i].dataset.name);
+
+    if (fieldVal) {
+      if (allInputs[i].type == "radio" || allInputs[i].type == "checkbox") {
+        if (allInputs[i].value == fieldVal) {
+          allInputs[i].checked = true;
+        }
+      } else {
+        allInputs[i].value = fieldVal;
+      }
+    }
+  }
+
+  var remove_tooltips = function() {
+    for (var i = 0; i < tooltips.length; i++) {
+      tooltips[i].tip.parentNode.removeChild(tooltips[i].tip);
+    }
+      tooltips = [];
+  };
+  var remove_tooltip = function(elem) {
+    for (var i = 0; i < tooltips.length; i++) {
+      if (tooltips[i].elem === elem) {
+        tooltips[i].tip.parentNode.removeChild(tooltips[i].tip);
+        tooltips.splice(i, 1);
+        return;
+      }
+    }
+  };
+  var create_tooltip = function(elem, text) {
+    var tooltip = document.createElement('div'), arrow = document.createElement('div'), inner = document.createElement('div'), new_tooltip = {};
+    if (elem.type != 'radio' && elem.type != 'checkbox') {
+      tooltip.className = '_error';
+      arrow.className = '_error-arrow';
+      inner.className = '_error-inner';
+      inner.innerHTML = text;
+      tooltip.appendChild(arrow);
+      tooltip.appendChild(inner);
+      elem.parentNode.appendChild(tooltip);
+    } else {
+      tooltip.className = '_error-inner _no_arrow';
+      tooltip.innerHTML = text;
+      elem.parentNode.insertBefore(tooltip, elem);
+      new_tooltip.no_arrow = true;
+    }
+    new_tooltip.tip = tooltip;
+    new_tooltip.elem = elem;
+    tooltips.push(new_tooltip);
+    return new_tooltip;
+  };
+  var resize_tooltip = function(tooltip) {
+    var rect = tooltip.elem.getBoundingClientRect();
+    var doc = document.documentElement, scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0));
+    if (scrollPosition < 40) {
+      tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _below';
+    } else {
+      tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _above';
+    }
+  };
+  var resize_tooltips = function() {
+    if (_removed) return;
+    for (var i = 0; i < tooltips.length; i++) {
+      if (!tooltips[i].no_arrow) resize_tooltip(tooltips[i]);
+    }
+  };
+  var validate_field = function(elem, remove) {
+    var tooltip = null, value = elem.value, no_error = true;
+    remove ? remove_tooltip(elem) : false;
+    if (elem.type != 'checkbox') elem.className = elem.className.replace(/ ?_has_error ?/g, '');
+    if (elem.getAttribute('required') !== null) {
+      if (elem.type == 'radio' || (elem.type == 'checkbox' && /any/.test(elem.className))) {
+        var elems = form_to_submit.elements[elem.name];
+        if (!(elems instanceof NodeList || elems instanceof HTMLCollection) || elems.length <= 1) {
+          no_error = elem.checked;
+        }
+        else {
+          no_error = false;
+          for (var i = 0; i < elems.length; i++) {
+            if (elems[i].checked) no_error = true;
+          }
+        }
+        if (!no_error) {
+          tooltip = create_tooltip(elem, "Please select an option.");
+        }
+      } else if (elem.type =='checkbox') {
+        var elems = form_to_submit.elements[elem.name], found = false, err = [];
+        no_error = true;
+        for (var i = 0; i < elems.length; i++) {
+          if (elems[i].getAttribute('required') === null) continue;
+          if (!found && elems[i] !== elem) return true;
+          found = true;
+          elems[i].className = elems[i].className.replace(/ ?_has_error ?/g, '');
+          if (!elems[i].checked) {
+            no_error = false;
+            elems[i].className = elems[i].className + ' _has_error';
+            err.push("Checking %s is required".replace("%s", elems[i].value));
+          }
+        }
+        if (!no_error) {
+          tooltip = create_tooltip(elem, err.join('<br/>'));
+        }
+      } else if (elem.tagName == 'SELECT') {
+        var selected = true;
+        if (elem.multiple) {
+          selected = false;
+          for (var i = 0; i < elem.options.length; i++) {
+            if (elem.options[i].selected) {
+              selected = true;
+              break;
+            }
+          }
+        } else {
+          for (var i = 0; i < elem.options.length; i++) {
+            if (elem.options[i].selected && !elem.options[i].value) {
+              selected = false;
+            }
+          }
+        }
+        if (!selected) {
+          elem.className = elem.className + ' _has_error';
+          no_error = false;
+          tooltip = create_tooltip(elem, "Please select an option.");
+        }
+      } else if (value === undefined || value === null || value === '') {
+        elem.className = elem.className + ' _has_error';
+        no_error = false;
+        tooltip = create_tooltip(elem, "This field is required.");
+      }
+    }
+    if (no_error && elem.name == 'email') {
+      if (!value.match(/^[\+_a-z0-9-'&=]+(\.[\+_a-z0-9-']+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i)) {
+        elem.className = elem.className + ' _has_error';
+        no_error = false;
+        tooltip = create_tooltip(elem, "Enter a valid email address.");
+      }
+    }
+    if (no_error && /date_field/.test(elem.className)) {
+      if (!value.match(/^\d\d\d\d-\d\d-\d\d$/)) {
+        elem.className = elem.className + ' _has_error';
+        no_error = false;
+        tooltip = create_tooltip(elem, "Enter a valid date.");
+      }
+    }
+    tooltip ? resize_tooltip(tooltip) : false;
+    return no_error;
+  };
+  var needs_validate = function(el) {
+    return el.name == 'email' || el.getAttribute('required') !== null;
+  };
+  var validate_form = function(e) {
+    var err = form_to_submit.querySelector('._form_error'), no_error = true;
+    if (!submitted) {
+      submitted = true;
+      for (var i = 0, len = allInputs.length; i < len; i++) {
+        var input = allInputs[i];
+        if (needs_validate(input)) {
+          if (input.type == 'text') {
+            addEvent(input, 'blur', function() {
+              this.value = this.value.trim();
+              validate_field(this, true);
+            });
+            addEvent(input, 'input', function() {
+              validate_field(this, true);
+            });
+          } else if (input.type == 'radio' || input.type == 'checkbox') {
+            (function(el) {
+              var radios = form_to_submit.elements[el.name];
+              for (var i = 0; i < radios.length; i++) {
+                addEvent(radios[i], 'click', function() {
+                  validate_field(el, true);
+                });
+              }
+            })(input);
+          } else if (input.tagName == 'SELECT') {
+            addEvent(input, 'change', function() {
+              validate_field(this, true);
+            });
+          } else if (input.type == 'textarea'){
+            addEvent(input, 'input', function() {
+              validate_field(this, true);
+            });
+          }
+        }
+      }
+    }
+    remove_tooltips();
+    for (var i = 0, len = allInputs.length; i < len; i++) {
+      var elem = allInputs[i];
+      if (needs_validate(elem)) {
+        if (elem.tagName.toLowerCase() !== "select") {
+          elem.value = elem.value.trim();
+        }
+        validate_field(elem) ? true : no_error = false;
+      }
+    }
+    if (!no_error && e) {
+      e.preventDefault();
+    }
+    resize_tooltips();
+    return no_error;
+  };
+  addEvent(window, 'resize', resize_tooltips);
+  addEvent(window, 'scroll', resize_tooltips);
+  window._old_serialize = null;
+  if (typeof serialize !== 'undefined') window._old_serialize = window.serialize;
+  _load_script("//d3rxaij56vjege.cloudfront.net/form-serialize/0.3/serialize.min.js", function() {
+    window._form_serialize = window.serialize;
+    if (window._old_serialize) window.serialize = window._old_serialize;
+  });
+  var form_submit = function(e) {
+    e.preventDefault();
+    if (validate_form()) {
+      // use this trick to get the submit button & disable it using plain javascript
+      document.querySelector('#_form_4_submit').disabled = true;
+            var serialized = _form_serialize(document.getElementById('_form_4_'));
+      var err = form_to_submit.querySelector('._form_error');
+      err ? err.parentNode.removeChild(err) : false;
+      _load_script('https://goldstonebrands.activehosted.com/proc.php?' + serialized + '&jsonp=true');
+    }
+    return false;
+  };
+  addEvent(form_to_submit, 'submit', form_submit);
+})();
+
+</script>
+                    
+                    
+                    
+                  </div>
+                </center>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    
+  {% if settings.product_related_enable %}
+    {% include 'related-products' %}
+  {% endif %}
+
+</div>
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+<script>
+  var selectCallback = function(variant, selector) {
+    timber.productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector,
+      translations: {
+        add_to_cart : "{{ 'products.product.add_to_cart' | t }}",
+        sold_out : "{{ 'products.product.sold_out' | t }}",
+        unavailable : "{{ 'products.product.unavailable' | t }}"
+      }
+    });
+  };
+
+  jQuery(function($) {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('.selector-wrapper').hide();
+    {% endif %}
+  });
+</script>
+
+
+<script>
+  fbq('track', 'ViewContent', {
+    content_ids: ['shopify_{{ product.id }}_{{ product.variants.first.id }}'],
+    content_type: '{{ product.type }}',
+    content_category: '{{ product.type }}',
+    value: '{{ product.price_min | money_without_currency }}',
+    currency: 'USD'              
+  });
+ 
+ // Insert Your Add-To-Cart Button's ID below.
+ $('AddToCart').bind( 'click', function(){
+ 
+   // Change the line below to whatever is needed to extract the selected variants
+   // ID, e.g.: var variant_id = $("form").first().serializeArray()[0]["value"];
+   var variant_id = $( "select#product-select option:selected").val();
+ 
+   fbq('track', 'AddToCart', {
+     content_ids: ['shopify_{{ product.id }}_{{ product.variants.first.id }}'],
+     content_type: '{{ product.type }}',
+     content_category: '{{ product.type }}',
+     value: '{{ product.price_min | money_without_currency }}',
+     currency: 'USD'
+   });
+});
+</script>
+<script>
+	var dimensionValue1 = shopify_US_{{ product.id }}_{{ product.variants.first.id }};
+    var dimensionValue2 = '{{ template }}';
+	var dimensionValue3 = '{{ product.price_min | money_without_currency }}';
+	ga('set', 'dimension1', dimensionValue1);
+	ga('set', 'dimension2', dimensionValue2);
+	ga('set', 'dimension3', dimensionValue3);
+  
+
+	                    
+	ga('require', 'displayfeatures');
+</script>
+
+
+  
+<!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<script type="text/javascript">
+  var google_tag_params = { 
+  ecomm_prodid: 'shopify_US_{{ product.id }}_{{ product.variants.first.id }}' ,
+  ecomm_pagetype: 'product',
+  ecomm_totalvalue: {{ product.price | money_without_currency | replace: ',', '' }},
+  ecomm_category: '{{ product.type }}',
+  isSaleItem: true
+};
+  
+  $(document).ready(function(){
+    var someDate = new Date();
+    var numberOfDaysToAdd = 21;
+    someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+    var dd = someDate.getDay();
+    var ddate = someDate.getDate() - 1;
+    var dds = ['1<sup>st</sup>','2<sup>nd</sup>','3<sup>rd</sup>','4<sup>th</sup>','5<sup>th</sup>','6<sup>th</sup>','7<sup>th</sup>','8<sup>th</sup>','9<sup>th</sup>','10<sup>th</sup>','11<sup>th</sup>','12<sup>th</sup>','13<sup>th</sup>','14<sup>th</sup>','15<sup>th</sup>','16<sup>th</sup>','17<sup>th</sup>','18<sup>th</sup>','19<sup>th</sup>','20<sup>th</sup>','21<sup>st</sup>','22<sup>nd</sup>','23<sup>rd</sup>','24<sup>th</sup>','25<sup>th</sup>','26<sup>th</sup>','27<sup>th</sup>','28<sup>th</sup>','29<sup>th</sup>','30<sup>th</sup>','31<sup>st</sup>'];
+    var d_days = dds[ddate];
+    var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	var weekday = weekdays[dd];
+    var mm = someDate.getMonth();
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var monthName = monthNames[mm];
+    var y = someDate.getFullYear();
+    var someFormattedDate = weekday+', '+monthName+' '+d_days +' '+y;
+    $('.d_date').html(someFormattedDate);
+    
+    $('.mailus').click(function(){
+      $('.r-tabs-tab:last-child a').click();
+    });
+    $('.pro_review_totla .spr-form-input a').click(function(){
+      $('.r-tabs-tab:first-child a').click();      
+    });
+    $('#show_price').click(function(){
+      	$(this).hide();
+    	$('#ProductPrice').addClass('active');
+    });
+    var w_width = $(window).width();
+	var w_height = $(window).height();
+    $('.pcustomize').click(function(){      
+      var pop_height = $('#popup_data').height();
+      var pt = (w_height - pop_height) / 2;
+    	$('#popup_overlay').show();
+      $('#popup_data').show().css('top',pt);
+    });
+    $('.rush_order').click(function(){      
+      var pop_height = $('#rush_order_popup').height();
+      var pt = (w_height - pop_height) / 2;
+    	$('#popup_overlay').show();
+      $('#rush_order_popup').show().css('top',pt);
+    });
+    $('.ring_size').click(function(){     
+      var pop_height = $('#size_chart_popup').height();
+      var pt = (w_height - pop_height) / 2;
+      $('#popup_overlay').show();
+      $('#size_chart_popup').show().css('top',pt);
+    });
+    $('.popup_close').click(function(){
+    	$('#popup_overlay').hide();
+      	$('#rush_order_popup').hide();
+      	$('#size_chart_popup').hide();
+      	$('#popup_success').hide();
+      	$('#popup_data').hide();
+    });
+    
+    $('#rush_order_popup form .button').click(function(e){
+      if($('#rush_order_popup #ContactFormSecure').val().length > 0){
+      	e.preventDefault();
+        return false;
+      }
+    });
+    $('#popup_data form .button').click(function(e){
+      if($('#popup_data #ContactFormSecure').val().length > 0){
+      	e.preventDefault();
+        return false;
+      }
+    });
+    $('.questions_wrap form .button').click(function(e){
+      if($('.questions_wrap #ContactFormSecure').val().length > 0){
+      	e.preventDefault();
+        return false;
+      }
+    });    
+    var getUrlParameter = function getUrlParameter(sParam) {
+      var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+          sURLVariables = sPageURL.split('&'),
+          sParameterName,
+          i;
+
+      for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+      }
+    };
+    
+    var contact_posted = getUrlParameter('contact_posted');
+    if(contact_posted == 'true'){
+    	$('#popup_overlay').show();
+      	$('#popup_success').show();
+    }
+    
+  });
+  $(window).resize(function(){
+    var w_width = $(window).width();
+    if(w_width <= 768){
+    	$('.contact_data').height('auto');
+    }
+    
+  });
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 881022575;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/881022575/?value=0&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+  
+
+  
+<div class="popup_data" id="popup_data" style="display:none;">
+  <a href="javascript:void(0);" class="popup_close"></a>
+{%comment%}
+  {% form 'contact' %}
+  {% if form.posted_successfully? %}
+  <p class="note form-success">
+    {{ 'contact.form.post_success' | t }}
+  </p>
+  {% endif %}
+  {{ form.errors | default_errors }}
+  {% assign name_attr = 'contact.form.name' | t | handle %}
+
+  
+<!--------->
+
+  <span>I would like to get a qoute for: <br><b>{{product.title}}</b></span><br/>
+  <input type="hidden" id="ContactFormProUrl" name="contact[product_url]" value="{{shop.url}}{{product.url}}"/>
+  <input type="hidden" id="ContactFormProName" name="contact[product_name]" value="{{product.title}}"/>
+  <input id="cid" name="contact[cid]" type="hidden" value="">
+  <input id="gclid" name="contact[gclid]" type="hidden" value="">
+  
+  <label for="ContactFormName" class="label--hidden">{{ 'contact.form.name' | t }}</label>
+  <input type="text" id="ContactFormName2" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }} *" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}" required>
+
+  <label for="ContactFormEmail" class="label--hidden">{{ 'contact.form.email' | t }}</label>
+  <input type="email" id="ContactFormEmail2" name="contact[email]" placeholder="{{ 'contact.form.email' | t }} *" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+
+  {% assign name_attr = 'contact.form.phone' | t | handle %}
+  <label for="ContactFormPhone" class="label--hidden">{{ 'contact.form.phone' | t }}</label>
+  <input type="tel"  id="ContactFormPhone2" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.phone' | t }}" pattern="[0-9\-]*" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+
+  <input type="text" id="ContactFormSecure" name="contact[secure]" value="" placeholder="Size" style="display:none;">
+  
+  <label for="ContactFormMessage" class="label--hidden">{{ 'contact.form.message' | t }}</label>
+  <textarea rows="5" id="ContactFormMessage2" name="contact[body]" placeholder="Type your question here"<!-- {{ 'contact.form.message' | t }}" -->{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+<!--------->
+  
+  <input type="submit" class="btn button" value="{{ 'contact.form.send' | t }}">
+
+  {% assign name_attr = 'contact.form.page' | t | handle %}
+  <label for="ContactFormPage" class="label--hidden">{{ 'contact.form.page' | t }}</label>
+  <input type="hidden"  style="width:75%;" id="ContactFormPage" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.page' | t }}" pattern="[0-9\-]*" value="{{ shop.url }}{{ product.url }}">
+
+<input type="hidden" id="SegalHistory" name="contact[SegalHistory]"/>
+  
+<script type="text/javascript"> 
+   document.getElementById("SegalHistory").value = getCookie('SegalHistory');
+</script>
+  {% endform %}
+{%endcomment%} 
+
+<form method="POST" action="https://goldstonebrands.activehosted.com/proc.php" id="_form_5_" class="_form _form_5 _inline-form  _dark" novalidate>
+  <input type="hidden" name="u" value="5" />
+  <input type="hidden" name="f" value="5" />
+  <input type="hidden" name="s" />
+  <input type="hidden" name="c" value="0" />
+  <input type="hidden" name="m" value="0" />
+  <input type="hidden" name="act" value="sub" />
+  <input type="hidden" name="v" value="2" />
+  
+  <div class="_form-content">
+    <div class="_field-wrapper">
+  <span>I would like to get a qoute for: <br><b>{{product.title}}</b></span><br/>
+  </div>
+    <div class="_form_element _x49420582 _full_width " >
+      <label class="_form-label">
+      </label>
+      <div class="_field-wrapper">
+        <input type="text" name="fullname" placeholder="Your name" />
+      </div>
+    </div>
+    <div class="_form_element _x98536016 _full_width " >
+      <label class="_form-label">
+      </label>
+      <div class="_field-wrapper">
+        <input type="text" name="email" placeholder="Your email" required/>
+      </div>
+    </div>
+    <div class="_form_element _x26840070 _full_width " >
+      <label class="_form-label">
+      </label>
+      <div class="_field-wrapper">
+        <input type="text" name="phone" placeholder="Your phone number" />
+      </div>
+    </div>
+    <div class="_form_element _field1 _full_width " >
+      <label class="_form-label">
+      </label>
+      <div class="_field-wrapper">
+        <textarea id="textid" name="field[1]" placeholder="Type your question here" style="height: 125px;" ></textarea>
+      </div>
+    </div>
+    <div class="_form_element _field3 _full_width " >
+      <input id="gclid"  type="hidden" name="field[3]" value="" />
+    </div>
+    <div class="_form_element _field4 _full_width " >
+      <input id="cid" type="hidden" name="field[4]" value="" />
+    </div>
+    <div class="_form_element _field5 _full_width " >
+      <input type="hidden" name="field[5]" value="{{shop.url}}{{product.url}}" />
+    </div>
+    <div class="_form_element _field6 _full_width " >
+      <input type="hidden" name="field[6]" value="{{product.title}}" />
+    </div>
+     <div class="_form_element _field7 _full_width " >
+      <input id="field7" type="hidden" name="field[7]" value="" />
+    </div>
+    <div class="_form_element _field10 _full_width " >
+      <input id="field10" type="hidden" name="field[10]" value="" />
+    </div>
+    <div class="_form_element _field12 _full_width " style="display:none;">
+      <div class="_field-wrapper">
+        <input type="text" name="field[12]" value="{{ product.price | money | remove: '.00'}}" placeholder="" />
+      </div>
+    </div>
+    <div class="_form_element _field13 _full_width " style="display:none;">
+      <div class="_field-wrapper">
+        <input type="text" name="field[13]" value="{{product.title}}" placeholder="" />
+      </div>
+    </div>
+    <div class="_form_element _field14 _full_width " style="display:none">
+      <div class="_field-wrapper">
+        <input type="text" name="field[14]" value="{{ featured_image | img_url: '1024x1024' }}" placeholder="" />
+      </div>
+    </div>
+    <div class="_button-wrapper _full_width">
+      <button id="_form_5_submit" onclick="updateURL();"  class="btn button _submit" type="submit">
+        Send
+      </button>
+    </div>
+    <div class="_clear-element">
+    </div>
+  </div>
+  <div class="_form-thank-you" style="display:none;">
+  </div>
+</form>
+{%comment%}
+the function that added the ?contac_posted=true in url
+{%endcomment%}
+   <script type="text/javascript">
+    function updateURL() {
+      if (history.pushState) {
+          var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?contact_posted=true';
+          window.history.pushState({path:newurl},'',newurl);
+      }
+    }
+  </script>  
+<script type="text/javascript">
+$(document).ready(function () {
+    $.getJSON("http://jsonip.com/?callback=?", function (data) {
+        console.log(data);
+        document.getElementById("field7").value=data.ip;
+var e = document.getElementById("productSelect-option-0");
+var e1 = document.getElementById("productSelect-option-1");
+var e2 = document.getElementById("productSelect-option-2");
+var text = e.options[e.selectedIndex].value;
+var text1 = e1.options[e1.selectedIndex].value;
+var text2 = e2.options[e2.selectedIndex].value;
+      document.getElementById("textid").value = {{ product.variants}};
+      document.getElementById("field10").value=text+'; '+text1+'; '+text2;
+    });
+});
+</script>
+<script type="text/javascript">
+window.cfields = {"1":"message","12":"pricefordeal","13":"ringnamefordeal","14":"pictureurl","3":"gclid","4":"cid","5":"contactformprourl","6":"contactformproname","7":"ipaddress","10":"options"};
+window._show_thank_you = function(id, message, trackcmp_url) {
+  var form = document.getElementById('_form_' + id + '_'), thank_you = form.querySelector('._form-thank-you');
+  form.querySelector('._form-content').style.display = 'none';
+  thank_you.innerHTML = message;
+  thank_you.style.display = 'block';
+  if (typeof(trackcmp_url) != 'undefined' && trackcmp_url) {
+    // Site tracking URL to use after inline form submission.
+    _load_script(trackcmp_url);
+  }
+  if (typeof window._form_callback !== 'undefined') window._form_callback(id);
+};
+window._show_error = function(id, message, html) {
+  var form = document.getElementById('_form_' + id + '_'), err = document.createElement('div'), button = form.querySelector('button'), old_error = form.querySelector('._form_error');
+  if (old_error) old_error.parentNode.removeChild(old_error);
+  err.innerHTML = message;
+  err.className = '_error-inner _form_error _no_arrow';
+  var wrapper = document.createElement('div');
+  wrapper.className = '_form-inner';
+  wrapper.appendChild(err);
+  button.parentNode.insertBefore(wrapper, button);
+  document.querySelector('[id^="_form"][id$="_submit"]').disabled = false;
+  if (html) {
+    var div = document.createElement('div');
+    div.className = '_error-html';
+    div.innerHTML = html;
+    err.appendChild(div);
+  }
+};
+window._load_script = function(url, callback) {
+    var head = document.querySelector('head'), script = document.createElement('script'), r = false;
+    script.type = 'text/javascript';
+    script.charset = 'utf-8';
+    script.src = url;
+    if (callback) {
+      script.onload = script.onreadystatechange = function() {
+      if (!r && (!this.readyState || this.readyState == 'complete')) {
+        r = true;
+        callback();
+        }
+      };
+    }
+    head.appendChild(script);
+};
+(function() {
+  if (window.location.search.search("excludeform") !== -1) return false;
+  var getCookie = function(name) {
+    var match = document.cookie.match(new RegExp('(^|; )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+  }
+  var setCookie = function(name, value) {
+    var now = new Date();
+    var time = now.getTime();
+    var expireTime = time + 1000 * 60 * 60 * 24 * 365;
+    now.setTime(expireTime);
+    document.cookie = name + '=' + value + '; expires=' + now + ';path=/';
+  }
+      var addEvent = function(element, event, func) {
+    if (element.addEventListener) {
+      element.addEventListener(event, func);
+    } else {
+      var oldFunc = element['on' + event];
+      element['on' + event] = function() {
+        oldFunc.apply(this, arguments);
+        func.apply(this, arguments);
+      };
+    }
+  }
+  var _removed = false;
+  var form_to_submit = document.getElementById('_form_5_');
+  var allInputs = form_to_submit.querySelectorAll('input, select, textarea'), tooltips = [], submitted = false;
+
+  var getUrlParam = function(name) {
+    var regexStr = '[\?&]' + name + '=([^&#]*)';
+    var results = new RegExp(regexStr, 'i').exec(window.location.href);
+    return results != undefined ? decodeURIComponent(results[1]) : false;
+  };
+
+  for (var i = 0; i < allInputs.length; i++) {
+    var regexStr = "field\\[(\\d+)\\]";
+    var results = new RegExp(regexStr).exec(allInputs[i].name);
+    if (results != undefined) {
+      allInputs[i].dataset.name = window.cfields[results[1]];
+    } else {
+      allInputs[i].dataset.name = allInputs[i].name;
+    }
+    var fieldVal = getUrlParam(allInputs[i].dataset.name);
+
+    if (fieldVal) {
+      if (allInputs[i].type == "radio" || allInputs[i].type == "checkbox") {
+        if (allInputs[i].value == fieldVal) {
+          allInputs[i].checked = true;
+        }
+      } else {
+        allInputs[i].value = fieldVal;
+      }
+    }
+  }
+
+  var remove_tooltips = function() {
+    for (var i = 0; i < tooltips.length; i++) {
+      tooltips[i].tip.parentNode.removeChild(tooltips[i].tip);
+    }
+      tooltips = [];
+  };
+  var remove_tooltip = function(elem) {
+    for (var i = 0; i < tooltips.length; i++) {
+      if (tooltips[i].elem === elem) {
+        tooltips[i].tip.parentNode.removeChild(tooltips[i].tip);
+        tooltips.splice(i, 1);
+        return;
+      }
+    }
+  };
+  var create_tooltip = function(elem, text) {
+    var tooltip = document.createElement('div'), arrow = document.createElement('div'), inner = document.createElement('div'), new_tooltip = {};
+    if (elem.type != 'radio' && elem.type != 'checkbox') {
+      tooltip.className = '_error';
+      arrow.className = '_error-arrow';
+      inner.className = '_error-inner';
+      inner.innerHTML = text;
+      tooltip.appendChild(arrow);
+      tooltip.appendChild(inner);
+      elem.parentNode.appendChild(tooltip);
+    } else {
+      tooltip.className = '_error-inner _no_arrow';
+      tooltip.innerHTML = text;
+      elem.parentNode.insertBefore(tooltip, elem);
+      new_tooltip.no_arrow = true;
+    }
+    new_tooltip.tip = tooltip;
+    new_tooltip.elem = elem;
+    tooltips.push(new_tooltip);
+    return new_tooltip;
+  };
+  var resize_tooltip = function(tooltip) {
+    var rect = tooltip.elem.getBoundingClientRect();
+    var doc = document.documentElement, scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0));
+    if (scrollPosition < 40) {
+      tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _below';
+    } else {
+      tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _above';
+    }
+  };
+  var resize_tooltips = function() {
+    if (_removed) return;
+    for (var i = 0; i < tooltips.length; i++) {
+      if (!tooltips[i].no_arrow) resize_tooltip(tooltips[i]);
+    }
+  };
+  var validate_field = function(elem, remove) {
+    var tooltip = null, value = elem.value, no_error = true;
+    remove ? remove_tooltip(elem) : false;
+    if (elem.type != 'checkbox') elem.className = elem.className.replace(/ ?_has_error ?/g, '');
+    if (elem.getAttribute('required') !== null) {
+      if (elem.type == 'radio' || (elem.type == 'checkbox' && /any/.test(elem.className))) {
+        var elems = form_to_submit.elements[elem.name];
+        if (!(elems instanceof NodeList || elems instanceof HTMLCollection) || elems.length <= 1) {
+          no_error = elem.checked;
+        }
+        else {
+          no_error = false;
+          for (var i = 0; i < elems.length; i++) {
+            if (elems[i].checked) no_error = true;
+          }
+        }
+        if (!no_error) {
+          tooltip = create_tooltip(elem, "Please select an option.");
+        }
+      } else if (elem.type =='checkbox') {
+        var elems = form_to_submit.elements[elem.name], found = false, err = [];
+        no_error = true;
+        for (var i = 0; i < elems.length; i++) {
+          if (elems[i].getAttribute('required') === null) continue;
+          if (!found && elems[i] !== elem) return true;
+          found = true;
+          elems[i].className = elems[i].className.replace(/ ?_has_error ?/g, '');
+          if (!elems[i].checked) {
+            no_error = false;
+            elems[i].className = elems[i].className + ' _has_error';
+            err.push("Checking %s is required".replace("%s", elems[i].value));
+          }
+        }
+        if (!no_error) {
+          tooltip = create_tooltip(elem, err.join('<br/>'));
+        }
+      } else if (elem.tagName == 'SELECT') {
+        var selected = true;
+        if (elem.multiple) {
+          selected = false;
+          for (var i = 0; i < elem.options.length; i++) {
+            if (elem.options[i].selected) {
+              selected = true;
+              break;
+            }
+          }
+        } else {
+          for (var i = 0; i < elem.options.length; i++) {
+            if (elem.options[i].selected && !elem.options[i].value) {
+              selected = false;
+            }
+          }
+        }
+        if (!selected) {
+          elem.className = elem.className + ' _has_error';
+          no_error = false;
+          tooltip = create_tooltip(elem, "Please select an option.");
+        }
+      } else if (value === undefined || value === null || value === '') {
+        elem.className = elem.className + ' _has_error';
+        no_error = false;
+        tooltip = create_tooltip(elem, "This field is required.");
+      }
+    }
+    if (no_error && elem.name == 'email') {
+      if (!value.match(/^[\+_a-z0-9-'&=]+(\.[\+_a-z0-9-']+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i)) {
+        elem.className = elem.className + ' _has_error';
+        no_error = false;
+        tooltip = create_tooltip(elem, "Enter a valid email address.");
+      }
+    }
+    if (no_error && /date_field/.test(elem.className)) {
+      if (!value.match(/^\d\d\d\d-\d\d-\d\d$/)) {
+        elem.className = elem.className + ' _has_error';
+        no_error = false;
+        tooltip = create_tooltip(elem, "Enter a valid date.");
+      }
+    }
+    tooltip ? resize_tooltip(tooltip) : false;
+    return no_error;
+  };
+  var needs_validate = function(el) {
+    return el.name == 'email' || el.getAttribute('required') !== null;
+  };
+  var validate_form = function(e) {
+    var err = form_to_submit.querySelector('._form_error'), no_error = true;
+    if (!submitted) {
+      submitted = true;
+      for (var i = 0, len = allInputs.length; i < len; i++) {
+        var input = allInputs[i];
+        if (needs_validate(input)) {
+          if (input.type == 'text') {
+            addEvent(input, 'blur', function() {
+              this.value = this.value.trim();
+              validate_field(this, true);
+            });
+            addEvent(input, 'input', function() {
+              validate_field(this, true);
+            });
+          } else if (input.type == 'radio' || input.type == 'checkbox') {
+            (function(el) {
+              var radios = form_to_submit.elements[el.name];
+              for (var i = 0; i < radios.length; i++) {
+                addEvent(radios[i], 'click', function() {
+                  validate_field(el, true);
+                });
+              }
+            })(input);
+          } else if (input.tagName == 'SELECT') {
+            addEvent(input, 'change', function() {
+              validate_field(this, true);
+            });
+          } else if (input.type == 'textarea'){
+            addEvent(input, 'input', function() {
+              validate_field(this, true);
+            });
+          }
+        }
+      }
+    }
+    remove_tooltips();
+    for (var i = 0, len = allInputs.length; i < len; i++) {
+      var elem = allInputs[i];
+      if (needs_validate(elem)) {
+        if (elem.tagName.toLowerCase() !== "select") {
+          elem.value = elem.value.trim();
+        }
+        validate_field(elem) ? true : no_error = false;
+      }
+    }
+    if (!no_error && e) {
+      e.preventDefault();
+    }
+    resize_tooltips();
+    return no_error;
+  };
+  addEvent(window, 'resize', resize_tooltips);
+  addEvent(window, 'scroll', resize_tooltips);
+  window._old_serialize = null;
+  if (typeof serialize !== 'undefined') window._old_serialize = window.serialize;
+  _load_script("//d3rxaij56vjege.cloudfront.net/form-serialize/0.3/serialize.min.js", function() {
+    window._form_serialize = window.serialize;
+    if (window._old_serialize) window.serialize = window._old_serialize;
+  });
+  var form_submit = function(e) {
+    e.preventDefault();
+    if (validate_form()) {
+      // use this trick to get the submit button & disable it using plain javascript
+      document.querySelector('#_form_5_submit').disabled = true;
+            var serialized = _form_serialize(document.getElementById('_form_5_'));
+      var err = form_to_submit.querySelector('._form_error');
+      err ? err.parentNode.removeChild(err) : false;
+      _load_script('https://goldstonebrands.activehosted.com/proc.php?' + serialized + '&jsonp=true');
+    }
+    return false;
+  };
+  addEvent(form_to_submit, 'submit', form_submit);
+})();
+
+</script>
+ 
+</div> 
+<div class="popup_data" id="popup_success" style="display:none;top: 10%;">
+  <a href="javascript:void(0);" class="popup_close"></a>
+  <p>Thank you for your inquiry. 
+     We will get back to you in the next few hours. 
+In case you are not getting reply in few hours, please email us at: Yaniv@segaljewellery.com
+  </p>
+</div>
+<!-- Rush Order -->  
+<div class="popup_data" id="rush_order_popup" style="display:none;">
+  <a href="javascript:void(0);" class="popup_close"></a>
+  {% form 'contact' %}
+
+  <h3>Rush my order:</h3>
+  
+  {{ form.errors | default_errors }}
+  {% assign name_attr = 'contact.form.name' | t | handle %}
+  <span>I have inquiry regarding: {{product.title}}</span><br/>
+  <input type="hidden" id="ContactFormProUrl" name="contact[product_url]" value="{{shop.url}}{{product.url}}"/>
+  <input type="hidden" id="ContactFormProName" name="contact[product_name]" value="{{product.title}}"/>
+  
+  
+  <label for="ContactFormName" class="label--hidden">{{ 'contact.form.name' | t }}</label>
+  <input type="text" id="ContactFormName2" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }} *" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}" required>
+
+  <label for="ContactFormEmail" class="label--hidden">{{ 'contact.form.email' | t }}</label>
+  <input type="email" id="ContactFormEmail2" name="contact[email]" placeholder="{{ 'contact.form.email' | t }} *" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+
+  {% assign name_attr = 'contact.form.phone' | t | handle %}
+  <label for="ContactFormPhone" class="label--hidden">{{ 'contact.form.phone' | t }}</label>
+  <input type="tel"  id="ContactFormPhone2" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.phone' | t }}" pattern="[0-9\-]*" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+
+  <input type="text" id="ContactFormSecure" name="contact[secure]" value="" placeholder="Size" style="display:none;">
+         
+  <label for="ContactFormMessage" class="label--hidden">{{ 'contact.form.message' | t }}</label>
+  <textarea rows="5" id="ContactFormMessage2" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+  <input type="submit" class="btn button" value="{{ 'contact.form.send' | t }}">
+
+  {% assign name_attr = 'contact.form.page' | t | handle %}
+  <label for="ContactFormPage" class="label--hidden">{{ 'contact.form.page' | t }}</label>
+  <input type="hidden"  style="width:75%;" id="ContactFormPage" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.page' | t }}" pattern="[0-9\-]*" value="{{ shop.url }}{{ product.url }}">
+
+  {% endform %}
+  
+</div>
+<!-- End Rush Order -->  
+<!-- Size chart -->  
+<div class="popup_data" id="size_chart_popup" style="display:none;">
+  <a href="javascript:void(0);" class="popup_close"></a>  
+  {{pages.size-chart.content}}
+</div>
+<!-- Size chart -->  

@@ -1,0 +1,399 @@
+{% comment %}
+
+  This is your /cart template.
+
+{% endcomment %}
+{% if cart.item_count > 0 %}
+
+  <form action="/cart" method="post" novalidate class="cart">
+
+    <div class="section-header">
+      <h1 class="section-header__title">{{ 'cart.general.title' | t }}</h1>
+    </div>
+
+    <div class="cart__row medium-down--hide cart__header-labels">
+      <div class="grid--full">
+        <div class="grid__item post-large--one-half push--post-large--one-half">
+          <div class="grid--full">
+            <div class="grid__item one-quarter medium-down--one-third text-center">
+              <span class="h4">{{ 'cart.label.price' | t }}</span>
+            </div>
+            <div class="grid__item one-quarter medium-down--one-third text-center">
+              <span class="h4 lbl_qnty">{{ 'cart.label.quantity' | t }}</span>
+            </div>
+            <div class="grid__item one-quarter medium-down--one-third ">
+              <span class="h4"></span>
+            </div>
+            <div class="grid__item one-quarter medium-down--one-third text-right">
+              <span class="h4">{{ 'cart.label.total' | t }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% comment %}
+      Loop through products in the cart
+    {% endcomment %}
+    {% for item in cart.items %}
+      <div class="cart__row ">
+        <div class="grid--full cart__row--table-large">
+
+          <div class="grid__item post-large--one-half small--one-whole medium--one-whole">
+            <div class="grid">              
+              <div class="grid__item one-third small--one-whole medium--one-whole">
+                <a href="{{ item.url }}" class="h5 ci_title mobile_hide">
+                  {{ item.product.title }}
+                </a>
+                <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove mobile_hide">
+                  &nbsp;
+                </a>
+                
+                <a href="{{ item.url | within: collections.all }}" class="cart__image">
+
+                  {% comment %}
+                    More image size options at:
+                      - http://docs.shopify.com/themes/filters/product-img-url
+                  {% endcomment %}
+                  <img src="{{ item | img_url: '160x160' }}" alt="{{ item.title | escape }}" class="small--hide medium--hide" />
+                  <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}" class="mobile_hide" />
+                </a>
+              </div>
+
+              <div class="grid__item two-thirds small--one-whole medium--one-whole m_ci_variant">
+                <div class="small--hide medium--hide">
+                <a href="{{ item.url }}" class="h5">
+                  {{ item.product.title }}
+                </a>
+                {% unless item.variant.title contains 'Default' %}
+                  <br>
+                  <small class="ci_color">{{ item.variant.title | split: '/' | first}}</small>
+                {% endunless %}
+
+                {% if settings.cart_vendor_enable %}
+                  <p>{{ item.vendor }}</p>
+                {% endif %}
+
+                {% comment %}
+                  Optional, loop through custom product line items if available
+
+                  For more info on line item properties, visit:
+                    - http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+                {% endcomment %}
+                {% assign propertySize = item.properties | size %}
+                {% if propertySize > 0 %}
+                  {% for p in item.properties %}
+                    {% assign first_character_in_key = p.first | truncate: 1, '' %}
+                    {% unless p.last == blank or first_character_in_key == '_' %}                      
+                      <small class="ci_size ">{{ p.first }} -
+
+                      {% comment %}
+                        Check if there was an uploaded file associated
+                      {% endcomment %}
+                      {% if p.last contains '/uploads/' %}
+                        <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                      {% else %}
+                        {{ p.last }}
+                      {% endif %}
+                	  </small>
+                    {% endunless %}
+                  {% endfor %}
+                {% endif %}
+                </div>
+                <div class="grid mobile_hide">
+                  <div class="grid__item three-fifths">
+                    {% unless item.variant.title contains 'Default' %}                  
+                    <small class="ci_color">{{ item.variant.title | split: '/' | first}}</small>
+                    {% endunless %}
+                  </div>
+                  <div class="grid__item four-tenths">
+                    {% if settings.cart_vendor_enable %}
+                    <p>{{ item.vendor }}</p>
+                    {% endif %}
+
+                    {% assign propertySize = item.properties | size %}
+                    {% if propertySize > 0 %}
+                    {% for p in item.properties %}
+                    {% assign first_character_in_key = p.first | truncate: 1, '' %}
+                    {% unless p.last == blank or first_character_in_key == '_' %}                      
+                    <small class="ci_size">{{ p.first }} -
+
+                      {% if p.last contains '/uploads/' %}
+                      <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                      {% else %}
+                      {{ p.last }}
+                      {% endif %}
+                    </small>
+                    {% endunless %}
+                    {% endfor %}
+                    {% endif %}
+                  </div>
+                </div>
+                
+              </div>
+
+            </div>
+          </div>
+
+          <div class="grid__item post-large--one-half small--one-whole medium--one-whole quantity_wrap">
+            <div class="grid--full cart__row--table-large">
+
+              <div class="grid__item one-quarter small--hide medium--hide text-center">
+                <span class="cart__mini-labels">{{ 'cart.label.price' | t }}</span>
+                <span class="h5">{{ item.price | money | remove: '.00'}}</span>
+              </div>
+
+              <div class="grid__item one-quarter small--three-quarters medium--three-quarters text-center">
+                <span class="cart__mini-labels">{{ 'cart.label.quantity' | t }}</span>
+                <input type="number" class="cart__quantity-selector" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" min="0">
+                <a href="javascript:void(0);" data-iid="{{item.id}}" class="update-cart2">&nbsp;</a>
+                
+              </div>
+			  <div class="grid__item one-quarter small--hide medium--hide text-center">
+                <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
+                  <small>{{ 'cart.general.remove' | t }}</small>
+                </a>
+                
+              </div>
+              <div class="grid__item one-quarter text-right small--one-quarter medium--one-quarter">
+                
+                <span class="cart__mini-labels small--hide medium--hide">{{ 'cart.label.total' | t }}</span>
+                <span class="h5 stotal">
+                  {% if item.original_line_price != item.line_price %}
+                    <small class="cart-item__original-price"><s>{{ item.original_line_price | money }}</s></small>
+                  {% endif %}
+                  {{ item.line_price | money | remove: '.00'}}
+                </span>
+                {% if item.original_line_price != item.line_price %}
+                  {% for discount in item.discounts %}
+                    <small class="cart-item__discount">
+                      {{ discount.title }}
+                    </small>
+                  {% endfor %}
+                {% endif %}                
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+          
+    {% endfor %}
+
+    <div class="cart__row last">
+      <div class="grid">
+        {% if settings.cart_notes_enable %}
+          {% assign noteSize = cart.note | size %}
+          <div class="grid__item one-quarter small--one-half medium--one-half">
+            <button type="button" class="small--hide medium--hide text-link cart__note-add{% if noteSize > 0 %} is-hidden{% endif %}">
+              {{ 'cart.label.add_note' | t }}
+            </button>
+            <button type="button" class="mobile_hide text-link cart__note-add{% if noteSize > 0 %} is-hidden{% endif %}">
+              Add a note
+            </button>
+            <div class="cart__note{% if noteSize > 0 %} is-active{% endif %}">
+              <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+              <textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+            </div>
+          </div>
+        {% endif %}
+        <div class="grid__item one-half cart_contact_data small--hide medium--hide">
+          <div class="contact_data">
+            <div class="small--hide medium--hide">
+              <span>Any Questions:</span>
+              <a href="#" onclick="tidioChatApi.chatDisplay(true);tidioChatApi.popUpOpen(); return false;" class="livechat">Live Chat</a>
+              <a href="tell:17253331574" class="callus">(+1) 725-333-1574</a>
+              <a href="javascript:void(0);" class="mailus">Email Us</a>       
+            </div>
+            <div class="mobile_hide">
+              <span>Any Questions:</span>
+              <a href="#" onclick="chatShow()" class="livechat">
+                <img src="{{ 'livechat2.png' | asset_url}}" alt="Live Chat" /><span>Live Chat</span></a>
+              <a href="tell:17253331574" class="callus">
+                <img src="{{ 'callus2.png' | asset_url}}" alt="" /><span>(+1) 725-333-1574</span></a>
+              <a href="javascript:void(0);" class="mailus">
+                <img src="{{ 'email2.png' | asset_url}}" alt="" /><span>Email Us</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="grid__item text-right {% if settings.cart_notes_enable %} one-quarter {%else%} one-half{% endif %} small--one-half medium--one-half">
+          <p>
+            <span class="cart__subtotal-title"><span id="bk-cart-subtotal-label">{{ 'cart.general.subtotal' | t }}</span></span>
+            <span class="h5 cart__subtotal">{{ cart.total_price | money | remove: '.00'}}</span>
+            {% if cart.total_discounts > 0 %}
+              {% assign savings = cart.total_discounts | money %}
+              <small class="cart-subtotal__savings">{{ 'cart.general.savings_html' | t: price: savings }}</small>
+            {% endif %}
+          </p>                            
+          <input type="submit" name="update" class="update-cart update_hidden" value="{{ 'cart.general.update' | t }}" />
+          <button type="submit" name="checkout" id="Checkout" class="btn checkout small--hide medium--hide">            
+            <span id="">Check Out</span>              
+            <img src="{{ 'checkout_icon.png' | asset_url}}" alt="Check out" class="checkout">
+          </button>
+                    
+        </div>
+        
+        <div class="grid__item small--one-whole medium--one-whole mobile_hide">
+          <button type="submit" name="checkout" id="Checkout" class="btn checkout ">            
+            <span id="">Check Out</span>              
+            <img src="{{ 'checkout_icon.png' | asset_url}}" alt="Check out" class="checkout">
+          </button>
+        </div>
+        
+        
+      </div>
+
+    </div>
+
+	<div class="grid mobile_hide">
+      <div class="grid__item">
+        <div class="contact_data">          
+          <div class="mobile_hide">
+            <span>Any Questions:</span>
+            <a href="#" onclick="chatShow()" class="livechat">
+              <img src="{{ 'livechat2.png' | asset_url}}" alt="Live Chat" /><span>Live Chat</span></a>
+            <a href="tell:17253331574" class="callus">
+              <img src="{{ 'callus2.png' | asset_url}}" alt="" /><span>(+1) 725-333-1574</span></a>
+            <a href="javascript:void(0);" class="mailus">
+              <img src="{{ 'email2.png' | asset_url}}" alt="" /><span>Email Us</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid promo_cart">      
+      <div class="grid__item nine-twelfths push--one-eighth small--hide medium--hide">
+        <div class="grid">
+          <div class="grid__item one-quarter small--one-half medium--one-half">
+            <span class="img_wrap"><img src="{{ 'risk_free.png' | asset_url}}" alt="Risk Free" /></span><span>Risk free returns</span>
+          </div>
+          <div class="grid__item one-quarter small--one-half medium--one-half">
+            <span class="img_wrap"><img src="{{ 'warranty.png' | asset_url }}" alt="Segal Jewelry Warrenty" /></span><span>Lifetime warrenty</span>
+          </div>
+          <div class="grid__item one-quarter small--one-half medium--one-half">
+            <span class="img_wrap"><img src="{{ 'free_resizing.png' | asset_url }}" alt="Free Resizing" /></span><span>Free resizing</span>
+          </div>
+          <div class="grid__item one-quarter small--one-half medium--one-half">
+            <span class="img_wrap"><img src="{{ 'secure_payments.png' | asset_url }}" alt="Secure Payments" /></span><span>Secure payment</span>
+          </div>
+        </div>
+      </div>
+      <div class="grid__item mobile_hide small--one-half medium--one-half">
+        <span class="img_wrap"><img src="{{ 'risk_free.png' | asset_url}}" alt="Risk Free" /></span><span>Risk free returns</span>
+      </div>
+      <div class="grid__item mobile_hide small--one-half medium--one-half">
+        <span class="img_wrap"><img src="{{ 'warranty.png' | asset_url }}" alt="Segal Jewelry Warrenty" /></span><span>Lifetime warrenty</span>
+      </div>
+      <div class="grid__item mobile_hide small--one-half medium--one-half">
+        <span class="img_wrap"><img src="{{ 'free_resizing.png' | asset_url }}" alt="Free Resizing" /></span><span>Free resizing</span>
+      </div>
+      <div class="grid__item mobile_hide small--one-half medium--one-half">
+        <span class="img_wrap"><img src="{{ 'secure_payments.png' | asset_url }}" alt="Secure Payments" /></span><span>Secure payment</span>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="grid__item text-center">
+        <div class="cart_payment_icon">
+        	<img src="{{ 'payment_logos.png' | asset_url }}" alt="Secure Payment">
+        </div>
+      </div>
+    </div>
+    
+    
+    
+  </form>
+
+<div class="popup_data" id="popup_data2" style="display:none;">
+  <a href="javascript:void(0);" class="popup_close"></a>
+  {% form 'contact' %}
+  {{ form.errors | default_errors }}
+  {% assign name_attr = 'contact.form.name' | t | handle %}
+    
+<!--------->
+  
+  <span>I would like to ask a question.</span><br/>
+  <input type="hidden" id="ContactPage" name="contact[from]" value="Cart Page"/>  
+  <label for="ContactFormName" class="label--hidden">{{ 'contact.form.name' | t }}</label>
+  <input type="text" id="ContactFormName2" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }} *" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}" required>
+
+  <label for="ContactFormEmail" class="label--hidden">{{ 'contact.form.email' | t }}</label>
+  <input type="email" id="ContactFormEmail2" name="contact[email]" placeholder="{{ 'contact.form.email' | t }} *" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+
+  {% assign name_attr = 'contact.form.phone' | t | handle %}
+  <label for="ContactFormPhone" class="label--hidden">{{ 'contact.form.phone' | t }}</label>
+  <input type="tel"  id="ContactFormPhone2" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.phone' | t }}" pattern="[0-9\-]*" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+
+  <label for="ContactFormMessage" class="label--hidden">{{ 'contact.form.message' | t }}</label>
+  <textarea rows="5" id="ContactFormMessage2" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+	
+<!--------->
+  
+  <input type="submit" class="btn button" value="{{ 'contact.form.send' | t }}">
+
+  {% assign name_attr = 'contact.form.page' | t | handle %}
+  <label for="ContactFormPage" class="label--hidden">{{ 'contact.form.page' | t }}</label>
+  <input type="hidden"  style="width:75%;" id="ContactFormPage" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.page' | t }}" pattern="[0-9\-]*" value="{{ shop.url }}{{ product.url }}">  
+  
+  {% endform %}
+  
+</div> 
+<div class="popup_data" id="popup_success" style="display:none;top: 10%;">
+  <a href="javascript:void(0);" class="popup_close"></a>
+  <p>Message sent successfully. We will contact back to you ASAP.</p>
+</div>
+
+{% else %}
+  {% comment %}
+    The cart is empty
+  {% endcomment %}
+  <h2>{{ 'cart.general.title' | t }}</h2>
+  <p>{{ 'cart.general.empty' | t }}</p>
+  <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+{% endif %}
+
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+    jQuery(document).on('click','.update-cart2',function(e){
+      e.preventDefault();
+   	  jQuery('.update-cart').click();           
+    });
+    
+    var w_width = $(window).width();
+	var w_height = $(window).height();
+    $('.template-cart .mailus').click(function(){      
+      var pop_height = $('#popup_data2').height();
+      var pt = (w_height - pop_height) / 2;
+    	$('#popup_overlay').show();
+      $('#popup_data2').show().css('top',pt);
+    });
+    $('.popup_close').click(function(){
+    	$('#popup_overlay').hide();
+      	$('#rush_order_popup').hide();
+      	$('#size_chart_popup').hide();
+      	$('#popup_success').hide();
+      	$('#popup_data2').hide();
+    });
+    
+    var getUrlParameter = function getUrlParameter(sParam) {
+      var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+          sURLVariables = sPageURL.split('&'),
+          sParameterName,
+          i;
+
+      for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+      }
+    };
+    
+    var contact_posted = getUrlParameter('contact_posted');
+    if(contact_posted == 'true'){
+    	$('#popup_overlay').show();
+      	$('#popup_success').show();
+    }
+    
+  });  
+</script>

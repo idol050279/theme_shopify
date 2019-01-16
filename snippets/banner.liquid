@@ -1,0 +1,32 @@
+{%if settings.banner_enable%}
+<div class="banner_wrap">
+  <div class="banner_left">
+    <a href="{{settings.banner1_link}}">
+      <img src="{{'banner1.jpg' | asset_url}}" alt="" />
+    </a>
+  </div>
+  <div class="banner_right">
+    <a href="{{settings.banner2_link}}">
+      <img src="{{'banner2.jpg' | asset_url}}" alt="" />
+    </a>
+    <a href="{{settings.banner3_link}}">
+      <img src="{{'banner3.jpg' | asset_url}}" alt="" />
+    </a>
+  </div>
+</div>
+<div class="banner_wrap_bottom" >
+  <div class="banner_left">
+    <a href="{{settings.banner4_link}}">
+      <img src="{{'banner4.jpg' | asset_url}}" alt="" />
+    </a>
+    <a href="{{settings.banner5_link}}">
+      <img src="{{'banner5.jpg' | asset_url}}" alt="" />
+    </a>
+  </div>
+  <div class="banner_right">
+    <a href="{{settings.banner6_link}}">
+      <img src="{{'banner6.jpg' | asset_url}}" alt="" />
+    </a>
+  </div>
+</div>
+{%endif%}

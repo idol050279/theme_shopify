@@ -1,0 +1,79 @@
+<ul class="inline-list social-icons">
+  {% if settings.social_twitter_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_twitter_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}" target="_blank">
+        <span class="icon icon-twitter" aria-hidden="true"></span>
+        <span class="fallback-text">Twitter</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_facebook_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_facebook_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}" target="_blank">
+        <img src="{{ 'fb.png' | asset_url}}" alt="Facebook" />
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_pinterest_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_pinterest_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}" target="_blank">
+        <img src="{{ 'pinterest.png' | asset_url}}" alt="Pinterest" />
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_google_plus_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_google_plus_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Google Plus' }}" rel="publisher" target="_blank">
+        <span class="icon icon-google_plus" aria-hidden="true"></span>
+        <span class="fallback-text">Google</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_instagram_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_instagram_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}" target="_blank">
+        <img src="{{ 'instagram.png' | asset_url}}" alt="Instagram" />
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_tumblr_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_tumblr_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}" target="_blank">
+        <span class="icon icon-tumblr" aria-hidden="true"></span>
+        <span class="fallback-text">Tumblr</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_youtube_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_youtube_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}" target="_blank">
+        <span class="icon icon-youtube" aria-hidden="true"></span>
+        <span class="fallback-text">YouTube</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_vimeo_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_vimeo_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}" target="_blank">
+        <span class="icon icon-vimeo" aria-hidden="true"></span>
+        <span class="fallback-text">Vimeo</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_fancy_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_fancy_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Fancy' }}" target="_blank">
+        <span class="icon icon-fancy" aria-hidden="true"></span>
+        <span class="fallback-text">Fancy</span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_rss_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_rss_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'RSS' }}" target="_blank">
+        <span class="icon icon-rss" aria-hidden="true"></span>
+        <span class="fallback-text">RSS</span>
+      </a>
+    </li>
+  {% endif %}
+</ul>

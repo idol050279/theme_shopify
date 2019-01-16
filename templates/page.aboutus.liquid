@@ -1,0 +1,64 @@
+<div class="banner_wrap2" style="background:url({{'about_banner.jpg' | asset_url}});">
+  <img src="{{ 'about_banner_mobile.jpg' | asset_url }}" alt="{{page.title}}" />
+    <h1>{{page.title}}</h1>
+</div>  
+<div class="grid grid-uniform about_data_wrap">  
+  <div class="grid__item one-half">
+    <div class="about_data">
+      <a href="{{settings.about_col1_link}}">
+        <img src="{{ 'about_col1.jpg' | asset_url}}" alt="" />
+      </a>
+      <a href="{{settings.about_col1_link}}">
+        <h2>{{settings.about_col1_title}}</h2>
+      </a>
+      <p>{{settings.about_col1_desc}}</p>
+      <a href="{{settings.about_col1_link}}" class="more_link">LEARN MORE</a>
+    </div>
+  </div>
+  <div class="grid__item one-half">    
+    <div class="about_data">
+      <a href="{{settings.about_col2_link}}">
+      	<img src="{{ 'about_col2.jpg' | asset_url}}" alt="" />
+      </a>
+      <a href="{{settings.about_col2_link}}">
+      	<h2>{{settings.about_col2_title}}</h2>
+      </a>
+      <p>{{settings.about_col2_desc}}</p>
+      <a href="{{settings.about_col2_link}}" class="more_link">LEARN MORE</a>
+    </div>
+  </div>
+</div>
+<div class="grid grid-uniform about_data_wrap">  
+  <div class="grid__item one-half">
+    <div class="about_data">
+      <a href="{{settings.about_col3_link}}" >
+      	<img src="{{ 'about_col3.jpg' | asset_url}}" alt="" />
+      </a>
+      <a href="{{settings.about_col3_link}}" >
+      	<h2>{{settings.about_col3_title}}</h2>
+      </a>
+      <p>{{settings.about_col3_desc}}</p>
+      <a href="{{settings.about_col3_link}}" class="more_link">LEARN MORE</a>
+    </div>
+  </div>
+  <div class="grid__item one-half">    
+    <div class="about_data">
+      <a href="{{settings.about_col4_link}}" >
+      	<img src="{{ 'about_col4.jpg' | asset_url}}" alt="" />
+      </a>
+      <a href="{{settings.about_col4_link}}" >
+      	<h2>{{settings.about_col4_title}}</h2>
+      </a>
+      <p>{{settings.about_col4_desc}}</p>
+      <a href="{{settings.about_col4_link}}" class="more_link">LEARN MORE</a>
+    </div>
+  </div>
+</div>
+<div class="grid">  
+  <div class="grid__item">    
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  </div>
+
+</div>
